@@ -1,0 +1,48 @@
+package org.proyecto;
+import java_cup.runtime.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/* 2. Codigo para el parser, variables, metodos */
+class Parser;
+
+parser code
+{:
+    //Clases, objetos, variables, lista, etc... en sintaxis java
+
+    //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
+:}
+
+
+/* Terminals */
+terminal  LBRACE, RBRACE, CONJ, ID, ARROW, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT,QUOTE;
+
+/* Non terminal */
+non terminal ini;
+non terminal body;
+non terminal option;
+non terminal re;
+non terminal word;
+
+start with ini;
+/* production rules */
+ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctly" ); :};
+
+body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {: System.out.println("Reading a set"); :}
+        | ID ARROW re SEMICOLON body {: System.out.println("Reading a regular expresion"); :}
+        | /* empty */
+        ;
+re ::=
+      |PLUS re {: System.out.println("Reading a OR"); :}
+      |STAR re {: System.out.println("Reading a STAR"); :}
+      |QUESTION re {: System.out.println("Reading a QUESTION"); :}
+      |OR re {: System.out.println("Reading a OR"); :}
+      |DOT re {: System.out.println("Reading a DOT"); :}
+      |LBRACE ID RBRACE re  {: System.out.println("Reading a set in a RE"); :}
+      |option  re {: System.out.println("Reading a QUOTE"); :}
+      ;
+
+option ::= LETTER
+          |NUMBER
+          |SPECIAL
+          ;
