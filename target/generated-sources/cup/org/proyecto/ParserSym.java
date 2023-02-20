@@ -19,7 +19,8 @@ public interface ParserSym {
   public static final int ID = 5;
   public static final int TILDE = 9;
   public static final int LETTER = 11;
-  public static final int QUOTE = 18;
+  public static final int STRING = 19;
+  public static final int COMMA = 18;
   public static final int EOF = 0;
   public static final int NUMBER = 12;
   public static final int CONJ = 4;
@@ -46,7 +47,8 @@ public interface ParserSym {
   "QUESTION",
   "OR",
   "DOT",
-  "QUOTE"
+  "COMMA",
+  "STRING"
   };
 }
 

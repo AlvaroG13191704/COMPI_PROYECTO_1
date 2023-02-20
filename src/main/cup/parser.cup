@@ -15,34 +15,42 @@ parser code
 
 
 /* Terminals */
-terminal  LBRACE, RBRACE, CONJ, ID, ARROW, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT,QUOTE;
+terminal  LBRACE, RBRACE, CONJ, ID, ARROW, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING;
 
 /* Non terminal */
 non terminal ini;
 non terminal body;
 non terminal option;
+non terminal option_2;
 non terminal re;
-non terminal word;
 
 start with ini;
 /* production rules */
 ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctly" ); :};
 
 body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {: System.out.println("Reading a set"); :}
+        | CONJ COLON ID ARROW option_2 SEMICOLON body {: System.out.println("Reading a set"); :}
         | ID ARROW re SEMICOLON body {: System.out.println("Reading a regular expresion"); :}
         | /* empty */
         ;
 re ::=
-      |PLUS re {: System.out.println("Reading a OR"); :}
-      |STAR re {: System.out.println("Reading a STAR"); :}
-      |QUESTION re {: System.out.println("Reading a QUESTION"); :}
-      |OR re {: System.out.println("Reading a OR"); :}
-      |DOT re {: System.out.println("Reading a DOT"); :}
+      |PLUS re              {: System.out.println("Reading a OR"); :}
+      |STAR re              {: System.out.println("Reading a STAR"); :}
+      |QUESTION re          {: System.out.println("Reading a QUESTION"); :}
+      |OR re                {: System.out.println("Reading a OR"); :}
+      |DOT re               {: System.out.println("Reading a DOT"); :}
       |LBRACE ID RBRACE re  {: System.out.println("Reading a set in a RE"); :}
-      |option  re {: System.out.println("Reading a QUOTE"); :}
+      |STRING:a re            {: System.out.println("Reading a STRING " + a ); :}
       ;
+
 
 option ::= LETTER
           |NUMBER
           |SPECIAL
           ;
+
+option_2 ::= LETTER  COMMA option_2
+            |NUMBER  COMMA option_2
+            |SPECIAL COMMA option_2
+            |option
+            ;

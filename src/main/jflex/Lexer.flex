@@ -4,7 +4,8 @@ import java.io.*;
 %%
 
 %{
-    // Some code in java
+    StringBuffer string = new StringBuffer();
+
 %}
 
 //Directives
@@ -31,6 +32,8 @@ import java.io.*;
 %state POLISH
 %state QUOATION_MARKS
 %state RE_SET
+%state STRING
+
 
 // Regular expressions
 FLOAT_NUMBER = [0-9]*\.[0-9]+
@@ -39,6 +42,7 @@ ID = [a-zA-Z_][a-zA-Z_0-9]*
 SPECIAL_CHARACTERS = [\x20-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]
 LETTER = [a-zA-Z]
 NUMBER = [0-9]
+
 %%
 
 // Comments
@@ -108,9 +112,9 @@ NUMBER = [0-9]
         return new Symbol(ParserSym.LBRACE,yyline, yycolumn, yytext());
       }
     /* Handle string  */
-    "\"" {
-        yybegin(QUOATION_MARKS);
-        return new Symbol(ParserSym.QUOTE,yyline, yycolumn, yytext());
+    \" {
+        yybegin(STRING);
+        string.setLength(0);
       }
      /* Handle errors */
      . {
@@ -132,25 +136,6 @@ NUMBER = [0-9]
        }
 }
 
-<QUOATION_MARKS>{
-    /* Handle special characteres */
-    {SPECIAL_CHARACTERS} {return new Symbol(ParserSym.SPECIAL,yyline, yycolumn, yytext());}
-
-    /* Handle letters */
-    {LETTER} {return new Symbol(ParserSym.LETTER,yyline, yycolumn, yytext());}
-
-    /* Handle numbers */
-    {NUMBER} {return new Symbol(ParserSym.NUMBER,yyline, yycolumn, yytext());}
-
-    \" {
-          yybegin(POLISH);
-          return new Symbol(ParserSym.QUOTE,yyline, yycolumn, yytext());
-      }
-    /* Handle errors */
-     . {
-         System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
-       }
-}
 <SETS>{
     /* The unique form to declared sets is: CONJ:identifier -> [special simbols]|[letters]|[numbers] "~" [special simbols]|[letters]|[numbers];  */
     /* Handle semicolon */
@@ -176,6 +161,12 @@ NUMBER = [0-9]
     "~" {
         yybegin(OPTIONS);
         return new Symbol(ParserSym.TILDE,yyline, yycolumn, yytext());
+      }
+
+    /* Handle , */
+    "," {
+          yybegin(OPTIONS);
+          return new Symbol(ParserSym.COMMA,yyline, yycolumn, yytext());
       }
 
     /* Handle errors */
@@ -221,4 +212,17 @@ NUMBER = [0-9]
 
     /* Ignore everything else */
     . { /* ignore */ }
+}
+
+<STRING> {
+  \"                             { yybegin(POLISH);
+                                      return new Symbol(ParserSym.STRING, yyline, yycolumn, string.toString());
+                                    }
+  [^\n\r\"\\]+                   { string.append( yytext() ); }
+  \\t                            { string.append('\t'); }
+  \\n                            { string.append('\n'); }
+
+  \\r                            { string.append('\r'); }
+  \\\"                           { string.append('\"'); }
+  \\                             { string.append('\\'); }
 }
