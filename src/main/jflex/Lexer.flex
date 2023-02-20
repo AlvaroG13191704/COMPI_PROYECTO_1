@@ -34,7 +34,6 @@ import java.io.*;
 %state RE_SET
 %state STRING
 
-
 // Regular expressions
 FLOAT_NUMBER = [0-9]*\.[0-9]+
 INT_NUMBER = [0-9]+
@@ -82,8 +81,22 @@ NUMBER = [0-9]
         return new Symbol(ParserSym.ARROW,yyline, yycolumn, yytext());
       }
     /* Handle %% then move to analyze the matches */
+    "%%" {
+        return new Symbol(ParserSym.PERCENT,yyline, yycolumn, yytext());
+      }
+    /* Handle SEMICOLON */
+    ";" {
+        return new Symbol(ParserSym.SEMICOLON,yyline, yycolumn, yytext());
+      }
 
+    /* Handle colon */
+    ":" { return new Symbol(ParserSym.COLON,yyline, yycolumn, yytext()); }
 
+    /* Handle string  */
+    \" {
+        yybegin(STRING);
+        string.setLength(0);
+      }
     /* Handle errors */
     . {
         System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());

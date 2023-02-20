@@ -15,7 +15,7 @@ parser code
 
 
 /* Terminals */
-terminal  LBRACE, RBRACE, CONJ, ID, ARROW, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING;
+terminal  LBRACE, RBRACE, CONJ, ID, ARROW, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
 
 /* Non terminal */
 non terminal ini;
@@ -29,10 +29,13 @@ start with ini;
 ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctly" ); :};
 
 body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {: System.out.println("Reading a set"); :}
-        | CONJ COLON ID ARROW option_2 SEMICOLON body {: System.out.println("Reading a set"); :}
-        | ID ARROW re SEMICOLON body {: System.out.println("Reading a regular expresion"); :}
+        | CONJ COLON ID ARROW option_2 SEMICOLON body           {: System.out.println("Reading a set"); :}
+        | ID ARROW re SEMICOLON body                            {: System.out.println("Reading a regular expresion"); :}
+        | PERCENT  body                                         {: System.out.println("%%"); :}
+        | ID COLON STRING SEMICOLON body                        {: System.out.println("Reading a test"); :}
         | /* empty */
         ;
+
 re ::=
       |PLUS re              {: System.out.println("Reading a OR"); :}
       |STAR re              {: System.out.println("Reading a STAR"); :}
@@ -40,7 +43,7 @@ re ::=
       |OR re                {: System.out.println("Reading a OR"); :}
       |DOT re               {: System.out.println("Reading a DOT"); :}
       |LBRACE ID RBRACE re  {: System.out.println("Reading a set in a RE"); :}
-      |STRING:a re            {: System.out.println("Reading a STRING " + a ); :}
+      |STRING:a re          {: System.out.println("Reading a STRING " + a ); :}
       ;
 
 
