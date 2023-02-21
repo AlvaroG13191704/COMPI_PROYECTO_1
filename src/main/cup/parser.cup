@@ -2,6 +2,7 @@ package org.proyecto;
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 /* 2. Codigo para el parser, variables, metodos */
 class Parser;
@@ -11,6 +12,8 @@ parser code
     //Clases, objetos, variables, lista, etc... en sintaxis java
 
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
+    List<String> results = new ArrayList<String>();
+
 :}
 
 
@@ -28,22 +31,48 @@ start with ini;
 /* production rules */
 ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctly" ); :};
 
-body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {: System.out.println("Reading a set"); :}
-        | CONJ COLON ID ARROW option_2 SEMICOLON body           {: System.out.println("Reading a set"); :}
-        | ID ARROW re SEMICOLON body                            {: System.out.println("Reading a regular expresion"); :}
-        | PERCENT  body                                         {: System.out.println("%%"); :}
-        | ID COLON STRING SEMICOLON body                        {: System.out.println("Reading a test"); :}
+body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {:  :}
+        | CONJ COLON ID ARROW option_2 SEMICOLON body           {: :}
+        | ID ARROW re:var SEMICOLON body                        {:
+                                                                    System.out.println("Reading a regular expresion " );
+                                                                    String value = (String) var;
+                                                                    results.add(value.split("null")[0]);
+                                                                    System.out.println(results);
+                                                                 :}
+        | PERCENT  body                                         {:  :}
+        | ID COLON STRING SEMICOLON body                        {:  :}
         | /* empty */
         ;
 
 re ::=
-      |PLUS re              {: System.out.println("Reading a OR"); :}
-      |STAR re              {: System.out.println("Reading a STAR"); :}
-      |QUESTION re          {: System.out.println("Reading a QUESTION"); :}
-      |OR re                {: System.out.println("Reading a OR"); :}
-      |DOT re               {: System.out.println("Reading a DOT"); :}
-      |LBRACE ID RBRACE re  {: System.out.println("Reading a set in a RE"); :}
-      |STRING:a re          {: System.out.println("Reading a STRING " + a ); :}
+      |PLUS:var re:a              {:
+                                    System.out.println(var);
+                                    RESULT = ""+var+a;
+                                :}
+      |STAR:var re:a              {:
+                                    System.out.println(var);
+                                    RESULT = ""+var+a;
+                                :}
+      |QUESTION:var re:a          {:
+                                    System.out.println(var);
+                                    RESULT = ""+var+a;
+                                :}
+      |OR:var re:a                {:
+                                    System.out.println( var);
+                                    RESULT = ""+var+a;
+                                :}
+      |DOT:var re:a               {:
+                                    System.out.println( var);
+                                    RESULT = ""+var+a;
+                                :}
+      |LBRACE ID:var RBRACE re:a  {:
+                                    System.out.println(var);
+                                    RESULT = ""+"{"+var+"}"+a;
+                                :}
+      |STRING:var re:a            {:
+                                    System.out.println( var);
+                                    RESULT = ""+var+a;
+                                :}
       ;
 
 

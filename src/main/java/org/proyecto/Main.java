@@ -16,16 +16,14 @@ public class Main {
                 CONJ: vocals -> a,e,i,o,u;
                 /////// EXPRESIONES REGULARES
                 ExpReg1 -> .{letra}*|"_"|{letra}{digito};
-                ExpresionReg2 -> .{digito}."."{digito};
-                RegEx3 -> {digito}*|"_"|{letra}{digito};       
+                ExpReg2 -> ...{letra}"_"{digito};
                 %% 
                 ExpReg1: "primerLexemaCokoa";
-                ExpresionReg2: "34.44";
+
                 }
                 """;
         Lexer lexer = new Lexer(new StringReader(expr));
         Parser parser = new Parser(lexer);
-        //parser.debug_parse();
         parser.parse();
 
     }
