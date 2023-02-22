@@ -1,6 +1,9 @@
 package org.proyecto;
 
+import org.proyecto.treeMethod.node;
+
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -16,7 +19,6 @@ public class Main {
                 CONJ: vocals -> a,e,i,o,u;
                 /////// EXPRESIONES REGULARES
                 ExpReg1 -> .{letra}*|"_"|{letra}{digito};
-                ExpReg2 -> ...{letra}"_"{digito};
                 %% 
                 ExpReg1: "primerLexemaCokoa";
 
@@ -25,6 +27,11 @@ public class Main {
         Lexer lexer = new Lexer(new StringReader(expr));
         Parser parser = new Parser(lexer);
         parser.parse();
+        // extact the array with the regular expressions
+        String[] expReg = parser.results.toArray(new String[0]);
 
+        // create arralist
+        ArrayList<node> list = new ArrayList();
+        ArrayList<ArrayList> table = new ArrayList();
     }
 }

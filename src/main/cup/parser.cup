@@ -37,7 +37,6 @@ body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {:  :}
                                                                     System.out.println("Reading a regular expresion " );
                                                                     String value = (String) var;
                                                                     results.add(value.split("null")[0]);
-                                                                    System.out.println(results);
                                                                  :}
         | PERCENT  body                                         {:  :}
         | ID COLON STRING SEMICOLON body                        {:  :}
@@ -71,7 +70,7 @@ re ::=
                                 :}
       |STRING:var re:a            {:
                                     System.out.println( var);
-                                    RESULT = ""+var+a;
+                                    RESULT = ""+"\""+var+"\""+a;
                                 :}
       ;
 

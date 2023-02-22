@@ -241,7 +241,6 @@ class CUP$Parser$actions {
                                                                     System.out.println("Reading a regular expresion " );
                                                                     String value = (String) var;
                                                                     results.add(value.split("null")[0]);
-                                                                    System.out.println(results);
                                                                  
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("body",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -403,7 +402,7 @@ class CUP$Parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
                                     System.out.println( var);
-                                    RESULT = ""+var+a;
+                                    RESULT = ""+"\""+var+"\""+a;
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
