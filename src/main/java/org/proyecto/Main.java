@@ -1,6 +1,7 @@
 package org.proyecto;
 
 import org.proyecto.treeMethod.node;
+import org.proyecto.treeMethod.numLeave;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -29,9 +30,13 @@ public class Main {
         parser.parse();
         // extact the array with the regular expressions
         String[] expReg = parser.results.toArray(new String[0]);
-
-        // create arralist
+        // create arraylist
         ArrayList<node> list = new ArrayList();
         ArrayList<ArrayList> table = new ArrayList();
+        // append . and #
+        String aux = "." + expReg[0] + "#";
+        // try the leave
+        numLeave numHoja = new numLeave(aux);
+        numHoja.getNum();
     }
 }

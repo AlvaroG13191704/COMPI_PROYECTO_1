@@ -10,11 +10,14 @@ public final class numLeave {
 
     public int getNum(){
         content -= 1;
+        System.out.println(content);
         return content;
     }
 
 
     public int clean(String content){
-        return content.replace(".", "").replace("|", "").replace("*", "").length();
+        String aux = content.replace(".", "").replace("|", "").replace("*", "").replace("+", "").replace("?", "");
+        System.out.println(aux);
+        return aux.length();
     }
 }
