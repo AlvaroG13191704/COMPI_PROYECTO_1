@@ -12,7 +12,8 @@ parser code
     //Clases, objetos, variables, lista, etc... en sintaxis java
 
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
-    List<String> results = new ArrayList<String>();
+    ArrayList<String> results = new ArrayList<String>();
+    ArrayList<String> regex = new ArrayList<String>();
 
 :}
 
@@ -35,8 +36,7 @@ body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {:  :}
         | CONJ COLON ID ARROW option_2 SEMICOLON body           {: :}
         | ID ARROW re:var SEMICOLON body                        {:
                                                                     System.out.println("Reading a regular expresion " );
-                                                                    String value = (String) var;
-                                                                    results.add(value.split("null")[0]);
+                                                                    results.add(regex.toString());
                                                                  :}
         | PERCENT  body                                         {:  :}
         | ID COLON STRING SEMICOLON body                        {:  :}
@@ -46,31 +46,31 @@ body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {:  :}
 re ::=
       |PLUS:var re:a              {:
                                     System.out.println(var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 :}
       |STAR:var re:a              {:
                                     System.out.println(var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 :}
       |QUESTION:var re:a          {:
                                     System.out.println(var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 :}
       |OR:var re:a                {:
                                     System.out.println( var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 :}
       |DOT:var re:a               {:
                                     System.out.println( var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 :}
       |LBRACE ID:var RBRACE re:a  {:
                                     System.out.println(var);
-                                    RESULT = ""+"{"+var+"}"+a;
+                                    RESULT = regex.add((String) var);
                                 :}
       |STRING:var re:a            {:
                                     System.out.println( var);
-                                    RESULT = ""+"\""+var+"\""+a;
+                                    RESULT = regex.add((String) var);
                                 :}
       ;
 

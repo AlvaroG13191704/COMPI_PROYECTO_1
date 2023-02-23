@@ -161,7 +161,8 @@ public class Parser extends java_cup.runtime.lr_parser {
     //Clases, objetos, variables, lista, etc... en sintaxis java
 
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
-    List<String> results = new ArrayList<String>();
+    ArrayList<String> results = new ArrayList<String>();
+    ArrayList<String> regex = new ArrayList<String>();
 
 
 
@@ -239,8 +240,7 @@ class CUP$Parser$actions {
 		Object var = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
                                                                     System.out.println("Reading a regular expresion " );
-                                                                    String value = (String) var;
-                                                                    results.add(value.split("null")[0]);
+                                                                    results.add(regex.toString());
                                                                  
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("body",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -294,7 +294,7 @@ class CUP$Parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
                                     System.out.println(var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -312,7 +312,7 @@ class CUP$Parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
                                     System.out.println(var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -330,7 +330,7 @@ class CUP$Parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
                                     System.out.println(var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -348,7 +348,7 @@ class CUP$Parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
                                     System.out.println( var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -366,7 +366,7 @@ class CUP$Parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
                                     System.out.println( var);
-                                    RESULT = ""+var+a;
+                                    RESULT = regex.add((String) var);
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -384,7 +384,7 @@ class CUP$Parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
                                     System.out.println(var);
-                                    RESULT = ""+"{"+var+"}"+a;
+                                    RESULT = regex.add((String) var);
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -402,7 +402,7 @@ class CUP$Parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
                                     System.out.println( var);
-                                    RESULT = ""+"\""+var+"\""+a;
+                                    RESULT = regex.add((String) var);
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }

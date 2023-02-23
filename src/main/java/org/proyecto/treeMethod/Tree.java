@@ -13,13 +13,10 @@ public class Tree {
         numLeave numHoja = new numLeave(er); // count the number of leaves
         Stack pila = new Stack();
 
-        String[] erSplit = er.split("");
-
-        ArrayList<String> strList = new ArrayList<>( Arrays.asList(erSplit));
-        Collections.reverse(strList);
+        String[] expReg = er.split(","); // split the string to evaluate each character
+        ArrayList<String> strList = new ArrayList<>( Arrays.asList(expReg));
 
         strList.forEach((character) -> {
-
             switch (character) {
                 case "|":
                     node lefto = (node) pila.pop();

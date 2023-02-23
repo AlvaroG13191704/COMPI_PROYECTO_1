@@ -1,10 +1,13 @@
 package org.proyecto;
 
+import org.proyecto.treeMethod.Tree;
 import org.proyecto.treeMethod.node;
 import org.proyecto.treeMethod.numLeave;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -22,21 +25,20 @@ public class Main {
                 ExpReg1 -> .{letra}*|"_"|{letra}{digito};
                 %% 
                 ExpReg1: "primerLexemaCokoa";
-
                 }
                 """;
         Lexer lexer = new Lexer(new StringReader(expr));
         Parser parser = new Parser(lexer);
         parser.parse();
         // extact the array with the regular expressions
-        String[] expReg = parser.results.toArray(new String[0]);
+        System.out.println(parser.results.get(0));
+        // add to the arraylist # and the beginning and . and the end
+        String expresionString = "#," + parser.results.get(0).replace("[","").replace("]", "").replace(" ","") + ",.";
         // create arraylist
-        ArrayList<node> list = new ArrayList();
-        ArrayList<ArrayList> table = new ArrayList();
-        // append . and #
-        String aux = "." + expReg[0] + "#";
-        // try the leave
-        numLeave numHoja = new numLeave(aux);
-        numHoja.getNum();
+        ArrayList<node> leaves = new ArrayList<>();
+        ArrayList<ArrayList> table = new ArrayList<>();
+        // Create the tree
+        Tree tree = new Tree(expresionString,leaves, table );
+        //System.out.println(aux);
     }
 }
