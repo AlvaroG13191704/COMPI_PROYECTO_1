@@ -16,15 +16,24 @@ public class Main {
 
         String expr = """
                 {
-                // COMENTARIO
-                <! multi comentario !>
                 CONJ: letra -> a~z;
-                CONJ: digito -> 0~9;
-                CONJ: vocals -> a,e,i,o,u;
-                /////// EXPRESIONES REGULARES
-                ExpReg1 -> .{letra}*|"_"|{letra}{digito};
-                %% 
-                ExpReg1: "primerLexemaCokoa";
+                CONJ: separados -> 2,a,e,R,d,0,9;
+                CONJ: mayus-> G~O;
+                CONJ: nums-> 1~5;
+                                
+                                
+                // EXPreg -> . |{letra} "2" * {nums};
+                EXPreg2 -> .. |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
+                                
+                %%
+                %%
+                // pruebas
+                <! comentario multilinea
+                asdasdasdasd
+                asdsad
+                !>
+                EXPreg: "este es un lexema";
+                                
                 }
                 """;
         Lexer lexer = new Lexer(new StringReader(expr));
