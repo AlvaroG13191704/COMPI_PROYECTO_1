@@ -1,11 +1,12 @@
 package org.proyecto.treeMethod;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.proyecto.treeMethod.type.Types;
 public class node {
-
     ArrayList<Integer> first;
     ArrayList<Integer> last;
+
     boolean anullable;
 
     String lexeme;
@@ -20,9 +21,12 @@ public class node {
     ArrayList<node> leaves;
     ArrayList<ArrayList> table;
 
+
+
     public node(String lexeme, Types type, int number, Object left, Object right, ArrayList<node> leaves, ArrayList<ArrayList> table) {
         first = new ArrayList<>();
         last = new ArrayList<>();
+
         anullable = true;
 
         this.lexeme = lexeme;
@@ -36,55 +40,77 @@ public class node {
 
         this.leaves = leaves;
         this.table = table;
+
     }
 
     public node getNode(){
-
+        // This is a recursive method, go the deepest node and evaluate until the root
         Object leftNode =  this.left instanceof node ? ((node) this.left).getNode(): null;
         Object rightNode = this.right instanceof node ? ((node) this.right).getNode(): null;
 
         if(null != this.type) switch (this.type) {
-            case HOJA:
+            case HOJA -> {
                 this.anullable = false;
                 this.first.add(this.number);
                 this.last.add(this.number);
-                break;
-            case AND:
-                if(leftNode instanceof node && rightNode instanceof node){
-                    this.anullable = ((node)leftNode).anullable && ((node) rightNode).anullable;
+                System.out.println("Hoja: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
+                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
+                treeInfo.addTreeInfo(treeInfo);
+            }
+            case AND -> {
+                if (leftNode != null && rightNode != null) {
+                    this.anullable = ((node) leftNode).anullable && ((node) rightNode).anullable;
 
-                    this.first.addAll(((node)leftNode).first);
-                    if(((node)leftNode).anullable){
-                        this.first.addAll(((node)rightNode).first);
+                    this.first.addAll(((node) leftNode).first);
+                    if (((node) leftNode).anullable) {
+                        this.first.addAll(((node) rightNode).first);
                     }
 
-                    if(((node)rightNode).anullable){
-                        this.last.addAll(((node)leftNode).last);
+                    if (((node) rightNode).anullable) {
+                        this.last.addAll(((node) leftNode).last);
                     }
-                    this.last.addAll(((node)rightNode).last);
+                    this.last.addAll(((node) rightNode).last);
                 }
-                break;
-            case OR:
-                if(leftNode instanceof node && rightNode instanceof node){
-                    this.anullable = ((node)leftNode).anullable || ((node) rightNode).anullable;
+                System.out.println("Nodo: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
+                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
+                treeInfo.addTreeInfo(treeInfo);
+            }
+            case OR -> {
+                if (leftNode != null && rightNode != null) {
+                    this.anullable = ((node) leftNode).anullable || ((node) rightNode).anullable;
+                    //
+                    this.first.addAll(((node) leftNode).first);
+                    this.first.addAll(((node) rightNode).first);
 
-                    this.first.addAll(((node)leftNode).first);
-                    this.first.addAll(((node)rightNode).first);
-
-
-                    this.last.addAll(((node)leftNode).last);
-                    this.last.addAll(((node)rightNode).last);
+                    this.last.addAll(((node) leftNode).last);
+                    this.last.addAll(((node) rightNode).last);
                 }
-                break;
-            case KLEENE:
-                if(leftNode instanceof node){
+                System.out.println("Nodo: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
+                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
+                treeInfo.addTreeInfo(treeInfo);
+            }
+            case KLEENE, QUESTION -> {
+                if (leftNode != null) {
                     this.anullable = true;
-                    this.first.addAll(((node)leftNode).first);
-                    this.last.addAll(((node)leftNode).last);
+                    this.first.addAll(((node) leftNode).first);
+                    this.last.addAll(((node) leftNode).last);
                 }
-                break;
-            default:
-                break;
+                System.out.println("Nodo: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
+                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
+                treeInfo.addTreeInfo(treeInfo);
+            }
+            case PLUS -> {
+                if (leftNode != null) {
+                    this.anullable = ((node) leftNode).anullable;
+                    this.first.addAll(((node) leftNode).first);
+                    this.last.addAll(((node) leftNode).last);
+                }
+                System.out.println("Nodo: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
+                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
+                treeInfo.addTreeInfo(treeInfo);
+            }
+            default -> {
+            }
         }
         return this;
     }

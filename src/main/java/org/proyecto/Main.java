@@ -52,7 +52,7 @@ public class Main {
         raiz.follow();
         System.out.println("==============================VALORES NODO ULTIMO . Y TABLA HOJAS ==============================");
         // Create a function to generate the graphviz code of the tree
-
+        System.out.println(treeInfo.treeInfoArrayList.size());
         System.out.println("==============================TABLA SIGUIENTES==============================");
         followTable ft = new followTable();
         ft.printTable(table);

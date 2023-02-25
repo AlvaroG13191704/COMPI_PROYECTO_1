@@ -8,7 +8,7 @@ public class Tree {
 
     node root;
 
-    public Tree( String er, ArrayList<node> leaves, ArrayList<ArrayList> table ) {
+    public Tree( String er, ArrayList<node> leaves, ArrayList<ArrayList> table) {
 
         numLeave numHoja = new numLeave(er); // count the number of leaves
         Stack pila = new Stack(); // will help to build the tree
