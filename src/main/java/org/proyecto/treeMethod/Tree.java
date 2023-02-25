@@ -11,45 +11,53 @@ public class Tree {
     public Tree( String er, ArrayList<node> leaves, ArrayList<ArrayList> table ) {
 
         numLeave numHoja = new numLeave(er); // count the number of leaves
-        Stack pila = new Stack();
+        Stack pila = new Stack(); // will help to build the tree
 
         String[] expReg = er.split(","); // split the string to evaluate each character
-        ArrayList<String> strList = new ArrayList<>( Arrays.asList(expReg));
+        ArrayList<String> strList = new ArrayList<>( Arrays.asList(expReg));// make te
+        System.out.println(strList);
 
         strList.forEach((character) -> {
             switch (character) {
-                case "|":
+                case "|" -> {
                     node lefto = (node) pila.pop();
                     node righto = (node) pila.pop();
 
                     node no = new node(character, Types.OR, 0, lefto, righto, leaves, table);
                     pila.push(no);
 
-                    break;
-                case ".":
+                }
+                case "." -> {
                     node lefta = (node) pila.pop();
                     node righta = (node) pila.pop();
 
                     node na = new node(character, Types.AND, 0, lefta, righta, leaves, table);
                     pila.push(na);
-
-                    break;
-                case "*":
+                }
+                case "*" -> {
                     node unario = (node) pila.pop();
-
                     node nk = new node(character, Types.KLEENE, 0, unario, null, leaves, table);
                     pila.push(nk);
-
-                    break;
-                default:
+                }
+                case "+" -> {
+                    node unario = (node) pila.pop();
+                    node nk = new node(character, Types.PLUS, 0, unario, null, leaves, table);
+                    pila.push(nk);
+                }
+                case "?" -> {
+                    node unario = (node) pila.pop();
+                    node nk = new node(character, Types.QUESTION, 0, unario, null, leaves, table);
+                    pila.push(nk);
+                }
+                default -> {
                     node nd = new node(character, Types.HOJA, numHoja.getNum(), null, null, leaves, table);
-                    pila.push(nd); //Contruir el arbol
+                    pila.push(nd); //build the tree
                     leave hoja = new leave();
                     hoja.addLeave(nd, leaves); //Tabla de siguientes o transiciones
-                    break;
+                }
             }
         });
-        this.root = (node) pila.pop();
+        this.root = (node) pila.pop(); // extract the last value of the stack that contain the root of the tree
     }
 
     public node getRoot(){

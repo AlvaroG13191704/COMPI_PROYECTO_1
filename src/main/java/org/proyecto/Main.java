@@ -1,8 +1,6 @@
 package org.proyecto;
 
-import org.proyecto.treeMethod.Tree;
-import org.proyecto.treeMethod.node;
-import org.proyecto.treeMethod.numLeave;
+import org.proyecto.treeMethod.*;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ public class Main {
                                 
                                 
                 // EXPreg -> . |{letra} "2" * {nums};
-                EXPreg2 -> .. |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
+                EXPreg2 -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
                                 
                 %%
                 %%
@@ -48,6 +46,20 @@ public class Main {
         ArrayList<ArrayList> table = new ArrayList<>();
         // Create the tree
         Tree tree = new Tree(expresionString,leaves, table );
-        //System.out.println(aux);
+        node raiz = tree.getRoot();
+
+        raiz.getNode(); // DETERMINA SI LOS NODOS SON ANULABLES, SUS PRIMEROS Y ULTIMOS
+        raiz.follow();
+        System.out.println("==============================VALORES NODO ULTIMO . Y TABLA HOJAS ==============================");
+        // Create a function to generate the graphviz code of the tree
+
+        System.out.println("==============================TABLA SIGUIENTES==============================");
+        followTable ft = new followTable();
+        ft.printTable(table);
+        transitionTable tran = new transitionTable(raiz, table, leaves); // bug
+        System.out.println("=============================TABLA TRANSICIONES=============================");
+        tran.impTable();
+        System.out.println("============================= GRAPHVIZ===============================================");
+        tran.impGraph();
     }
 }

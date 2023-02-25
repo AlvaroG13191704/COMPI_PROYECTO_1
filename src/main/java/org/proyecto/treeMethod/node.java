@@ -21,8 +21,8 @@ public class node {
     ArrayList<ArrayList> table;
 
     public node(String lexeme, Types type, int number, Object left, Object right, ArrayList<node> leaves, ArrayList<ArrayList> table) {
-        first = new ArrayList();
-        last = new ArrayList();
+        first = new ArrayList<>();
+        last = new ArrayList<>();
         anullable = true;
 
         this.lexeme = lexeme;
@@ -43,7 +43,7 @@ public class node {
         Object leftNode =  this.left instanceof node ? ((node) this.left).getNode(): null;
         Object rightNode = this.right instanceof node ? ((node) this.right).getNode(): null;
 
-        if(null != this.type)switch (this.type) {
+        if(null != this.type) switch (this.type) {
             case HOJA:
                 this.anullable = false;
                 this.first.add(this.number);
