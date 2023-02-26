@@ -1,6 +1,7 @@
 package org.proyecto.treeMethod;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Stack;
 
 import org.proyecto.treeMethod.type.Types;
 public class node {
@@ -53,9 +54,7 @@ public class node {
                 this.anullable = false;
                 this.first.add(this.number);
                 this.last.add(this.number);
-                System.out.println("Hoja: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
-                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
-                treeInfo.addTreeInfo(treeInfo);
+
             }
             case AND -> {
                 if (leftNode != null && rightNode != null) {
@@ -71,9 +70,7 @@ public class node {
                     }
                     this.last.addAll(((node) rightNode).last);
                 }
-                System.out.println("Nodo: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
-                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
-                treeInfo.addTreeInfo(treeInfo);
+
             }
             case OR -> {
                 if (leftNode != null && rightNode != null) {
@@ -85,9 +82,7 @@ public class node {
                     this.last.addAll(((node) leftNode).last);
                     this.last.addAll(((node) rightNode).last);
                 }
-                System.out.println("Nodo: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
-                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
-                treeInfo.addTreeInfo(treeInfo);
+
             }
             case KLEENE, QUESTION -> {
                 if (leftNode != null) {
@@ -95,9 +90,7 @@ public class node {
                     this.first.addAll(((node) leftNode).first);
                     this.last.addAll(((node) leftNode).last);
                 }
-                System.out.println("Nodo: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
-                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
-                treeInfo.addTreeInfo(treeInfo);
+
             }
             case PLUS -> {
                 if (leftNode != null) {
@@ -105,9 +98,7 @@ public class node {
                     this.first.addAll(((node) leftNode).first);
                     this.last.addAll(((node) leftNode).last);
                 }
-                System.out.println("Nodo: " + this.lexeme + " " + this.number + " " + this.first + " " + this.last + " " + this.anullable);
-                treeInfo treeInfo = new treeInfo(this.lexeme, this.number, this.first, this.last, this.anullable);
-                treeInfo.addTreeInfo(treeInfo);
+
             }
             default -> {
             }
@@ -141,6 +132,47 @@ public class node {
         }
 
         return this;
+    }
+
+    public void generateGraphviz() {
+        StringBuilder graphviz = new StringBuilder();
+        graphviz.append("digraph syntax_tree {\n");
+        graphviz.append("node [fontname=Helvetica, fontsize=12];\n");
+        graphviz.append("edge [arrowhead=vee, arrowtail=none];\n");
+
+        int[] identifier = {0};
+
+        buildGraphvizTree(this, identifier, graphviz);
+        graphviz.append("}");
+        System.out.println(graphviz);
+    }
+    public node getNodeVoid(){
+        // This is a recursive method, go the deepest node and evaluate until the root
+        return this;
+    }
+    private void buildGraphvizTree(node node, int[] identifier, StringBuilder graphviz) {
+        String idNode = "node" + identifier[0]; // a identifier for the node
+        // generate this [label="F \n F[1,2] \n L[8] \n .  "];
+        graphviz.append(idNode).append(" [label=\"").append(node.anullable).append(" \\n F").append(node.first).append(" \\n L").append(node.last).append(" \\n ").append(node.lexeme.replace("\"","")).append(" \"];\n").append("");
+        //graphviz.append(idNode).append(" [label=\"").append(node.lexeme.replace("\"","")).append("\"];\n").append("");
+        Object leftNode =  node.left instanceof node ? ((node) node.left).getNodeVoid(): null;
+        Object rightNode = node.right instanceof node ? ((node) node.right).getNodeVoid(): null;
+
+        if (leftNode != null) {
+            String idLeftNode = "node" + (identifier[0] + 1); // a identifier for the left node
+            graphviz.append(idNode).append(" -> ").append(idLeftNode).append(";\n");
+            identifier[0]++; // increment the identifier
+            buildGraphvizTree((node) leftNode, identifier, graphviz); // recursive call
+        }
+
+        if (rightNode != null) {
+            String idRightNode = "node" + (identifier[0] + 1); // a identifier for the right node
+            graphviz.append(idNode).append(" -> ").append(idRightNode).append(";\n");
+            identifier[0]++; // increment the identifier
+            buildGraphvizTree((node) rightNode, identifier, graphviz); // recursive call
+        }
+        identifier[0]++; // increment the identifier
+
     }
 
 }

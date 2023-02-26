@@ -70,7 +70,7 @@ re ::=
                                 :}
       |STRING:var re:a            {:
                                     System.out.println( var);
-                                    RESULT = regex.add((String) var);
+                                    RESULT = regex.add((String) "\""+ var + "\"");
                                 :}
       ;
 
