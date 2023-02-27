@@ -20,8 +20,8 @@ public class Main {
                 CONJ: nums-> 1~5;
                                 
                                 
-                //EXPreg -> . |{letra} "2" * {nums};
-                EXPreg2 -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
+                EXPreg -> . |{letra} "2" * {nums};
+                //EXPreg2 -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
                                 
                 %%
                 %%
@@ -57,8 +57,8 @@ public class Main {
         System.out.println("==============================TABLA SIGUIENTES==============================");
         followTable ft = new followTable();
         ft.printTable(table);
-        transitionTable tran = new transitionTable(raiz, table, leaves); // bug
         System.out.println("=============================TABLA TRANSICIONES=============================");
+        transitionTable tran = new transitionTable(raiz, table, leaves); // bug
         tran.impTable();
         System.out.println("============================= GRAPHVIZ===============================================");
         tran.impGraph();

@@ -119,7 +119,7 @@ public class node {
                     tabla.append(nodo.number, nodo.lexeme, ((node) rightFollow).first, table);
                 }
                 break;
-            case KLEENE:
+            case KLEENE, PLUS:
                 for (int item : ((node)leftFollow).last) {
                     leave hoja = new leave();
                     node nodo = hoja.getLeave(item, leaves);
@@ -153,8 +153,11 @@ public class node {
     private void buildGraphvizTree(node node, int[] identifier, StringBuilder graphviz) {
         String idNode = "node" + identifier[0]; // a identifier for the node
         // generate this [label="F \n F[1,2] \n L[8] \n .  "];
-        graphviz.append(idNode).append(" [label=\"").append(node.anullable).append(" \\n F").append(node.first).append(" \\n L").append(node.last).append(" \\n ").append(node.lexeme.replace("\"","")).append(" \"];\n").append("");
-        //graphviz.append(idNode).append(" [label=\"").append(node.lexeme.replace("\"","")).append("\"];\n").append("");
+        if (node.type == Types.HOJA) {
+            graphviz.append(idNode).append(" [label=\"").append(node.anullable).append(" \\n F").append(node.first).append(" \\n L").append(node.last).append(" \\n").append(node.lexeme.replace("\"","")).append("\\n "+node.number).append(" \"];\n").append("");
+        }else {
+            graphviz.append(idNode).append(" [label=\"").append(node.anullable).append(" \\n F").append(node.first).append(" \\n L").append(node.last).append(" \\n ").append(node.lexeme.replace("\"","")).append(" \"];\n").append("");
+        }
         Object leftNode =  node.left instanceof node ? ((node) node.left).getNodeVoid(): null;
         Object rightNode = node.right instanceof node ? ((node) node.right).getNodeVoid(): null;
 
