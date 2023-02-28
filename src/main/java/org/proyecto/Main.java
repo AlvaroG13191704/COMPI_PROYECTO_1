@@ -20,8 +20,8 @@ public class Main {
                 CONJ: nums-> 1~5;
                                 
                                 
-                EXPreg -> . |{letra} "2" * {nums};
-                //EXPreg2 -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
+                //EXPreg -> . |{letra} "2" * {nums};
+                EXPreg2 -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
                                 
                 %%
                 %%

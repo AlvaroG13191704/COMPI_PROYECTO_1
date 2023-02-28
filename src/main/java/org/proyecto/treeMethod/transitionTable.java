@@ -6,7 +6,8 @@ import org.proyecto.treeMethod.node;
 import org.proyecto.treeMethod.transicion;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class transitionTable {
 
@@ -29,73 +30,58 @@ public class transitionTable {
             ArrayList state = states.get(i);
             ArrayList<Integer> elementos = (ArrayList) state.get(1);
 
-            // TODO  Aqui se encuentra el bug sobre las transiciones
-            // Sucede cuando existe dos transisiciones con el mismo simbolos y diferentes siguientes
-            // Ej: S0 ={1,2,3}  se ve la tabla de siguiente y se tiene  (S0,a) = {1,2,3} y (S0,a) = {4} el nuevo estado quedaria de la union de estos dos S1 = {1,2,3,4}
-            // Lo que hace ahora es remplazar el estado final entonces queda asi S1 = {4} y no S1 = {1,2,3,4}
+            Map<String, ArrayList<Integer>> transiciones = new HashMap<>();
+            boolean esAceptacion = false;
 
             for(int hoja : elementos){
                 followTable sigTabla = new followTable();
                 ArrayList lexemeNext = (ArrayList) sigTabla.next(hoja, tabla).clone();
 
+                if(lexemeNext.get(0) == ""){
+                    continue;
+                }
 
-                boolean existe = false;
-                String found = "";
+                ArrayList<Integer> sigEstados = transiciones.get(lexemeNext.get(0));
+                if(sigEstados == null){
+                    sigEstados = new ArrayList<>();
+                    transiciones.put((String)lexemeNext.get(0), sigEstados);
+                }
+                sigEstados.addAll((ArrayList<Integer>)lexemeNext.get(1));
 
-                for( ArrayList e : states ){
-                    if(e.get(1).equals(lexemeNext.get(1))){
-                        existe = true;
-                        found = (String)e.get(0);
+                leave hojas = new leave();
+                if(hojas.isAccept(hoja, leaves)){
+                    esAceptacion = true;
+                }
+            }
+
+            for(Map.Entry<String, ArrayList<Integer>> entrada : transiciones.entrySet()){
+                ArrayList<Integer> sigEstados = entrada.getValue();
+
+                String nombreEstadoSiguiente = null;
+                for(ArrayList estado : states){
+                    if(estado.get(1).equals(sigEstados)){
+                        nombreEstadoSiguiente = (String)estado.get(0);
                         break;
                     }
                 }
 
-                if(!existe){
-                    leave hojas = new leave();
-                    if(hojas.isAccept(hoja, leaves)){
-                        state.set(3, true);
-                    }
-                    if(lexemeNext.get(0)==""){
-                        continue;
-                    }
+                if(nombreEstadoSiguiente == null){
+                    nombreEstadoSiguiente = "S" + cont;
+                    cont++;
 
                     ArrayList nuevo = new ArrayList();
-                    nuevo.add("S"+cont);
-                    nuevo.add(lexemeNext.get(1));
+                    nuevo.add(nombreEstadoSiguiente);
+                    nuevo.add(sigEstados);
                     nuevo.add(new ArrayList());
                     nuevo.add(false);
 
-                    transicion trans = new transicion(state.get(0) + "", lexemeNext.get(0) + "", nuevo.get(0) + "");
-                    ((ArrayList)state.get(2)).add(trans);
-
-                    cont += 1;
                     states.add(nuevo);
-
                 }
-                else{
-                    leave hojas = new leave();
-                    if(hojas.isAccept(hoja, leaves)){
-                        state.set(3, true);
-                    }
 
-                    boolean trans_exist = false;
-
-                    for(Object trans : (ArrayList)state.get(2)){
-                        transicion t = (transicion) trans;
-                        if(t.compare(state.get(0) + "", lexemeNext.get(0) + "")){
-                            trans_exist = true;
-                            break;
-                        }
-                    }
-                    if(!trans_exist){
-                        transicion trans = new transicion(state.get(0) + "", lexemeNext.get(0) + "", found + "");
-                        ((ArrayList)state.get(2)).add(trans);
-                    }
-                }
+                transicion trans = new transicion(state.get(0) + "", entrada.getKey(), nombreEstadoSiguiente);
+                ((ArrayList)state.get(2)).add(trans);
             }
-
-        }
-    }
+        }}
 
     public void impTable(){
         for(ArrayList state : states){
@@ -111,14 +97,21 @@ public class transitionTable {
     }
 
     public void impGraph(){
+        String graph = "digraph AFD {\n";
+        graph += "fontname=\"Helvetica,Arial,sans-serif\";\n";
+        graph += "node [fontname=\"Helvetica,Arial,sans-serif\"]\n";
+        graph += "edge [fontname=\"Helvetica,Arial,sans-serif\"]\n";
+        graph += "rankdir=LR;\n";
+        graph += "node [shape = doublecircle]; S4 ;\n";
+        graph += "node [shape = circle];\n";
         for(ArrayList state : states){
-            String graph = "";
             for(Object tr : (ArrayList)state.get(2)){
                 transicion t = (transicion) tr;
-                graph += t.graph();
+                graph += t.graph() + "\n";
             }
-            System.out.println(graph);
         }
+        graph += "}";
+        System.out.println(graph);
     }
 
 }

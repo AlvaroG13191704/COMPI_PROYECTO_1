@@ -110,25 +110,25 @@ public class node {
         Object leftFollow=  this.left instanceof node ? ((node) this.left).follow() : null;
         Object rightFollow =  this.right instanceof node ? ((node) this.right).follow() : null;
 
-        if(null != this.type)switch (this.type) {
-            case AND:
-                for (int item : ((node)leftFollow).last) {
+        if(null != this.type) switch (this.type) {
+            case AND -> {
+                for (int item : ((node) leftFollow).last) {
                     leave hoja = new leave();
                     node nodo = hoja.getLeave(item, leaves);
                     followTable tabla = new followTable();
                     tabla.append(nodo.number, nodo.lexeme, ((node) rightFollow).first, table);
                 }
-                break;
-            case KLEENE, PLUS:
-                for (int item : ((node)leftFollow).last) {
+            }
+            case KLEENE, PLUS -> {
+                for (int item : ((node) leftFollow).last) {
                     leave hoja = new leave();
                     node nodo = hoja.getLeave(item, leaves);
                     followTable tabla = new followTable();
                     tabla.append(nodo.number, nodo.lexeme, ((node) leftFollow).first, table);
                 }
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
 
         return this;

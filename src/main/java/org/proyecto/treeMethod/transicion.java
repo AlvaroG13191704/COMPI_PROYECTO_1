@@ -23,6 +23,6 @@ public class transicion {
     }
 
     public String graph(){
-        return this.initialState +  "->"  + this.finalState + "[label=\"" + this.transition + "\"]";
+        return this.initialState +  "->"  + this.finalState + "[label=\"" + this.transition.replace("\"","") + "\"]";
     }
 }

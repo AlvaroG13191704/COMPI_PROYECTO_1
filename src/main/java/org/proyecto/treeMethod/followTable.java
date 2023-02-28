@@ -1,6 +1,7 @@
 package org.proyecto.treeMethod;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class followTable {
@@ -38,8 +39,39 @@ public class followTable {
     }
 
     public void printTable(ArrayList<ArrayList> table){
+        // build a table in graphviz format
+        ArrayList<ArrayList> tableSort = new ArrayList<>();
+
+        StringBuilder tableString = new StringBuilder("digraph G {\n");
+        tableString.append("node [shape=plaintext];\n");
+        tableString.append("table [label=<\n");
+        tableString.append("<table border=\"0\" cellborder=\"1\" cellspacing=\"0\">\n");
+        tableString.append("<tr><td>Nodo</td><td>Lexema</td><td>Siguiente</td></tr>\n");
+        int c = 0;
+
+        // sort table by nuumber of node without removing
         for(ArrayList item : table){
-            System.out.println(item.get(0) + " - " + item.get(1) + " - " + item.get(2) );
+           tableSort.add(item);
         }
+        tableSort.sort(Comparator.comparingInt(o -> (int) o.get(0)));
+
+
+
+
+        for(ArrayList item : tableSort){
+            System.out.println(item.get(0) + " " + item.get(1) + " " + item.get(2));
+
+            tableString.append("<tr>");
+            tableString.append("<td>").append(item.get(0)).append("</td>");
+            tableString.append("<td>").append(item.get(1)).append("</td>");
+            tableString.append("<td>").append(item.get(2)).append("</td>");
+            tableString.append("</tr>\n");
+            c++;
+        }
+        tableString.append("<tr><td>").append(c+1).append("</td><td>").append("\"#\"").append("</td><td>-</td></tr>\n");
+        tableString.append("</table>\n");
+        tableString.append(">]\n;");
+        tableString.append("}");
+        System.out.println(tableString);
     }
 }
