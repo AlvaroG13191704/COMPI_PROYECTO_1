@@ -40,9 +40,7 @@ public class followTable {
 
     public void printTable(ArrayList<ArrayList> table){
         // build a table in graphviz format
-        ArrayList<ArrayList> tableSort = new ArrayList<>();
-
-        StringBuilder tableString = new StringBuilder("digraph G {\n");
+        StringBuilder tableString = new StringBuilder("digraph followTable {\n");
         tableString.append("node [shape=plaintext];\n");
         tableString.append("table [label=<\n");
         tableString.append("<table border=\"0\" cellborder=\"1\" cellspacing=\"0\">\n");
@@ -50,17 +48,9 @@ public class followTable {
         int c = 0;
 
         // sort table by nuumber of node without removing
+        table.sort(Comparator.comparingInt(o -> (int) o.get(0)));
+
         for(ArrayList item : table){
-           tableSort.add(item);
-        }
-        tableSort.sort(Comparator.comparingInt(o -> (int) o.get(0)));
-
-
-
-
-        for(ArrayList item : tableSort){
-            System.out.println(item.get(0) + " " + item.get(1) + " " + item.get(2));
-
             tableString.append("<tr>");
             tableString.append("<td>").append(item.get(0)).append("</td>");
             tableString.append("<td>").append(item.get(1)).append("</td>");

@@ -14,24 +14,27 @@ public class transitionTable {
     public ArrayList<ArrayList> states;
     public int cont;
 
-    public transitionTable(node root, ArrayList tabla, ArrayList<node> leaves) {
-        this.states = new ArrayList();
+    public ArrayList<String> acceptStates;
 
-        ArrayList datos = new ArrayList();
+    public transitionTable(node root, ArrayList tabla, ArrayList<node> leaves) {
+        this.states = new ArrayList(); // are the states of the AFD
+
+        ArrayList datos = new ArrayList(); // are the data of the states
         datos.add("S0");
         datos.add(root.first);
         datos.add(new ArrayList());
         datos.add(false);
-
+        int aceptacion = 0;
+        acceptStates = new ArrayList<>();
+        // data save the first state, an arraylist and if is an accept state
         this.states.add(datos);
         this.cont = 1;
 
-        for(int i = 0; i < states.size(); i++){
-            ArrayList state = states.get(i);
-            ArrayList<Integer> elementos = (ArrayList) state.get(1);
+        for(int i = 0; i < states.size(); i++){ // iterate through the states
+            ArrayList state = states.get(i); // get the state
 
-            Map<String, ArrayList<Integer>> transiciones = new HashMap<>();
-            boolean esAceptacion = false;
+            ArrayList<Integer> elementos = (ArrayList) state.get(1); // get the elements of the state
+            Map<String, ArrayList<Integer>> transiciones = new HashMap<>(); // are the transitions of the state
 
             for(int hoja : elementos){
                 followTable sigTabla = new followTable();
@@ -48,10 +51,8 @@ public class transitionTable {
                 }
                 sigEstados.addAll((ArrayList<Integer>)lexemeNext.get(1));
 
-                leave hojas = new leave();
-                if(hojas.isAccept(hoja, leaves)){
-                    esAceptacion = true;
-                }
+                leave hojas = new leave(); // here is the problem with accepted states
+                aceptacion = hojas.isAccept(hoja, leaves);
             }
 
             for(Map.Entry<String, ArrayList<Integer>> entrada : transiciones.entrySet()){
@@ -73,9 +74,17 @@ public class transitionTable {
                     nuevo.add(nombreEstadoSiguiente);
                     nuevo.add(sigEstados);
                     nuevo.add(new ArrayList());
-                    nuevo.add(false);
+                    // evaluate if the number is in sigEstados
+                    if(sigEstados.contains(aceptacion)){
+                        nuevo.add(true);
+                        acceptStates.add(nombreEstadoSiguiente);
+                    }else{
+                        nuevo.add(false);
+                    }
 
                     states.add(nuevo);
+                    // add the accept state
+
                 }
 
                 transicion trans = new transicion(state.get(0) + "", entrada.getKey(), nombreEstadoSiguiente);
@@ -102,7 +111,13 @@ public class transitionTable {
         graph += "node [fontname=\"Helvetica,Arial,sans-serif\"]\n";
         graph += "edge [fontname=\"Helvetica,Arial,sans-serif\"]\n";
         graph += "rankdir=LR;\n";
-        graph += "node [shape = doublecircle]; S4 ;\n";
+        graph += "node [shape = doublecircle]; ";
+        for(String state : this.acceptStates){
+            graph += state + ",";
+        }
+        // erase the last comma
+        graph = graph.substring(0, graph.length() - 1);
+        graph += ";\n";
         graph += "node [shape = circle];\n";
         for(ArrayList state : states){
             for(Object tr : (ArrayList)state.get(2)){

@@ -5,16 +5,16 @@ import java.util.Stack;
 
 import org.proyecto.treeMethod.type.Types;
 public class node {
-    ArrayList<Integer> first;
-    ArrayList<Integer> last;
+    public ArrayList<Integer> first;
+    public ArrayList<Integer> last;
 
     boolean anullable;
 
-    String lexeme;
+    public String lexeme;
     Types type;
     int number;
 
-    boolean accept;
+    public boolean accept;
 
     Object left;
     Object right;
