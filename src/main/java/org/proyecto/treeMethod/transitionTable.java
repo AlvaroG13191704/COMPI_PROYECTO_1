@@ -6,6 +6,7 @@ import org.proyecto.treeMethod.node;
 import org.proyecto.treeMethod.transicion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class transitionTable {
     public int cont;
 
     public ArrayList<String> acceptStates;
+    public ArrayList<node> leaves;
 
     public transitionTable(node root, ArrayList tabla, ArrayList<node> leaves) {
         this.states = new ArrayList(); // are the states of the AFD
@@ -24,8 +26,11 @@ public class transitionTable {
         datos.add(root.first);
         datos.add(new ArrayList());
         datos.add(false);
+        datos.add(new ArrayList());
         int aceptacion = 0;
+        // graphs
         acceptStates = new ArrayList<>();
+        this.leaves = leaves;
         // data save the first state, an arraylist and if is an accept state
         this.states.add(datos);
         this.cont = 1;
@@ -81,28 +86,81 @@ public class transitionTable {
                     }else{
                         nuevo.add(false);
                     }
-
+                    nuevo.add(new ArrayList());
                     states.add(nuevo);
                     // add the accept state
+                    //System.out.println("nuevo: " + nuevo);
 
                 }
 
+                //System.out.println( "trans: "+ state.get(0) +  entrada.getKey() +  nombreEstadoSiguiente);
+                //System.out.println(" ---------------------------- ");
+
                 transicion trans = new transicion(state.get(0) + "", entrada.getKey(), nombreEstadoSiguiente);
                 ((ArrayList)state.get(2)).add(trans);
+                ((ArrayList)state.get(4)).add(trans.toArray());
             }
-        }}
+        }
+    }
 
     public void impTable(){
-        for(ArrayList state : states){
-            String tran = "[";
-            for(Object tr : (ArrayList)state.get(2)){
-                transicion t = (transicion) tr;
-                tran += t.toString() + ", ";
+        String graphviz = "digraph transitionTable {\n";
+        graphviz += "n[shape=none label = <\n" +
+                " <TABLE border=\"0\" cellspacing=\"0\" cellpadding=\"10\" style=\"collapse\">\n" +
+                "  <TR >\n" +
+                "  <TD rowspan=\"2\" colspan=\"1\" border=\"1\">ESTADOS</TD>\n" +
+                "  <TD colspan=\"6\" border=\"1\">Terminales</TD>\n" +
+                "  </TR>\n" ;
+        // reverse the order of the leaves
+        Collections.reverse(leaves);
+        // elimiante duplicates
+        for(int i = 0; i < leaves.size(); i++){
+            for(int j = i + 1; j < leaves.size(); j++){
+                if(leaves.get(i).lexeme.equals(leaves.get(j).lexeme)){
+                    leaves.remove(j);
+                }
             }
-            tran += "]";
-            tran = tran.replace(", ]", "]");
-            System.out.println(state.get(0) + " " + state.get(1) + " " + tran + " " + state.get(3));
         }
+        // remove the last leave
+        leaves.remove(leaves.size() - 1);
+        // the official order of the leaves in the table
+        graphviz += "  <TR>\n";
+        for(node hoja : this.leaves){
+            graphviz += "  <TD border=\"1\">" + hoja.lexeme + "</TD>\n";
+        }
+        graphviz += "  </TR>\n";
+
+        for(ArrayList state : states){
+            graphviz += "  <TR>\n";
+            graphviz += "  <TD border=\"1\">" + state.get(0) + " " + state.get(1) +  "</TD>\n";
+            // create a string array of the size of leaves
+            String[] tdValues = new String[leaves.size()];
+            for(int i = 0; i < tdValues.length; i++){
+                tdValues[i] = "<TD border=\"1\">---</TD>";
+            }
+            // iretate throught leaves and find the transitions an use the that index
+            ArrayList fourthPart = (ArrayList) state.get(4);
+            for(int i = 0; i< leaves.size(); i++){
+                int finalI = i;
+                fourthPart.forEach((item) -> {
+                    String value = item.toString().replace("[", "").replace("]", "");
+                    String[] values = value.split(",");
+                    if(values[0].equals(leaves.get(finalI).lexeme)){
+                        tdValues[finalI] = "<TD border=\"1\">" + values[1] + "</TD>";
+                    }
+                });
+            }
+
+
+            for(String td : tdValues){
+                graphviz += "  " + td + "\n";
+            }
+            graphviz += "  </TR>\n";
+        }
+        graphviz += " </TABLE>\n" +
+                ">];\n" +
+                "}";
+        System.out.println(graphviz);
     }
 
     public void impGraph(){

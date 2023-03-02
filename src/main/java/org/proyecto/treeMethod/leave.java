@@ -20,7 +20,6 @@ public class leave {
 
         int accept = 0;
         for (node item : leaves) {
-            //System.out.println("item.number: " + item.number + " numLeave: " + numLeave + " item.accept: " + item.accept);
             if(item.number != numLeave && item.accept){
                 // add the number of the leave to the arraylist
                 accept = item.number;
