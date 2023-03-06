@@ -17,7 +17,6 @@ public class leave {
     }
 
     public int isAccept(int numLeave, ArrayList<node> leaves){
-
         int accept = 0;
         for (node item : leaves) {
             if(item.number != numLeave && item.accept){

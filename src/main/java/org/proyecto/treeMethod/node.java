@@ -54,7 +54,6 @@ public class node {
                 this.anullable = false;
                 this.first.add(this.number);
                 this.last.add(this.number);
-
             }
             case AND -> {
                 if (leftNode != null && rightNode != null) {
