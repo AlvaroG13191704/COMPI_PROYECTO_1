@@ -47,6 +47,7 @@ decimales: "1505.55";//correcto
 	el proyecto 1 #4&$2=?
 	#####RESULTADO SATISFACTORIO PARA ESTE COMENTARIO######
 !>
+
                 """;
         ArrayList<Exceptions> errors = new ArrayList<>();
         Lexer lexer = new Lexer(new StringReader(expr));
