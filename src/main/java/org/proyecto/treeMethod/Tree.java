@@ -14,6 +14,8 @@ public class Tree {
         Stack pila = new Stack(); // will help to build the tree
 
         String[] expReg = er.split(","); // split the string to evaluate each character
+        // [#, digito, +, ".", ., digito, ., .]
+        // [nodo. ]
         ArrayList<String> strList = new ArrayList<>( Arrays.asList(expReg));// make te
         System.out.println(strList);
 

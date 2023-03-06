@@ -9,6 +9,7 @@ import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
+import org.proyecto.Errors.Exceptions;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -163,6 +164,21 @@ public class Parser extends java_cup.runtime.lr_parser {
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
     ArrayList<String> results = new ArrayList<String>();
     ArrayList<String> regex = new ArrayList<String>();
+
+    // List of errors
+    List<Exceptions> errors = new ArrayList();
+    // Method to add errors
+    public void syntax_error(Symbol s) {
+        errors.add(new Exceptions("Error Sintáctico", (String) s.value, "Error sintáctico detectado", s.left, s.right));
+    }
+    //Unrecovered syntax error detected.
+     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        errors.add(new Exceptions("Error Sintáctico", (String) s.value, "Error sintáctico detectado sin recuperación", s.left, s.right));
+     }
+
+     public ArrayList<Exceptions> getErrors(){
+         return (ArrayList<Exceptions>) errors;
+     }
 
 
 
