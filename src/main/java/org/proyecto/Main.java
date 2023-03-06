@@ -17,37 +17,23 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         String expr = """
-{
+                {
 
-<!
-	############Este es el archiv facil para el proyecto 1##############
-	NOTA: no se permite modificar
-!>
+                //                       ----DEFINIENDO CONJUNTOS----
+                CONJ: mayus - > A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
+                CONJ: minus -     > a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z;
+                CONJ: letra -  > a~z;
+                CONJ: digito -  > 0~9;\s
 
-//AGREGANDO CONJUNTOS
-CONJ: abecedarioMinus -> a~z; // declarando conjunto de letras desde a hasta z en minusculas
-CONJ: digito -> 0~5; // creamos el conjunto de digitos solo para 0, 1, 2, 3, 4 y 5
+                //                       ----DEFINIENDO EXPRESIONES----
+                frase -> ."C"."O"."M"."P"."I"."1" ? + | | {letra} {digito} " ";
+                cadena  -   > . \\' . + | | | | \\n {minus} {mayus} {digito} " " \\';
+                %%
+                %%
+                cadena : "\\'cadena entre comilla simple\\'"; //bueno
+                frase : "COMPI1 sale con 100"; // bueno
 
-//AGREGANDO EXPRESIONES REGULARES
-identificador -> . {abecedarioMinus} * | "_" | {abecedarioMinus} {digito}; //INFIJO: abecedarioMinus ("_"|abecedarioMinus|digito)*
-decimales -> . +{digito} . "." + {digito}; //INFIJO: digito+ "." digito+
-
-%%
-%%
-//ESTAS SON LAS PRUEBAS PARA LAS EXPRESIONES REGULARES
-identificador :  "soy_un_id_1"; //correcto
-identificador :  "ComPi1"; //incorrecto
-decimales : "301.59"; //incorrecto
-decimales: "1505.55";//correcto
-
-}
-
-<! YA s4lIO cOMPi 1
-	sale con 100
-	el proyecto 1 #4&$2=?
-	#####RESULTADO SATISFACTORIO PARA ESTE COMENTARIO######
-!>
-
+                }
                 """;
         ArrayList<Exceptions> errors = new ArrayList<>();
         Lexer lexer = new Lexer(new StringReader(expr));

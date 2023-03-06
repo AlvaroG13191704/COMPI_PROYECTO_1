@@ -20,11 +20,11 @@ parser code
     List<Exceptions> errors = new ArrayList();
     // Method to add errors
     public void syntax_error(Symbol s) {
-        errors.add(new Exceptions("Error Sintáctico", (string) s.value, "Error sintáctico detectado", s.left, s.right));
+        errors.add(new Exceptions("Error Sintáctico", (String) s.value, "Error sintáctico detectado", s.left, s.right));
     }
     //Unrecovered syntax error detected.
      public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
-        errors.add(new Exceptions("Error Sintáctico", (string) s.value, "Error sintáctico detectado sin recuperación", s.left, s.right));
+        errors.add(new Exceptions("Error Sintáctico", (String) s.value, "Error sintáctico detectado sin recuperación", s.left, s.right));
      }
 
      public ArrayList<Exceptions> getErrors(){
@@ -35,7 +35,7 @@ parser code
 
 
 /* Terminals */
-terminal  LBRACE, RBRACE, CONJ, ID, ARROW1, ARROW2, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
+terminal  LBRACE, RBRACE, CONJ, ID,ARROW, ARROW1, ARROW2, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
 
 /* Non terminal */
 non terminal ini;
@@ -50,7 +50,7 @@ ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctl
 
 body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body {:  :}
         | CONJ COLON ID ARROW1 ARROW2 option_2 SEMICOLON body           {: :}
-        | ID ARROW re:var SEMICOLON body                        {:
+        | ID ARROW1 ARROW2 re:var SEMICOLON body                        {:
                                                                     System.out.println("Reading a regular expresion " );
                                                                     results.add(regex.toString());
                                                                  :}
