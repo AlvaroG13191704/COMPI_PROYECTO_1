@@ -35,7 +35,7 @@ parser code
 
 
 /* Terminals */
-terminal  LBRACE, RBRACE, CONJ, ID, ARROW, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
+terminal  LBRACE, RBRACE, CONJ, ID, ARROW1, ARROW2, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
 
 /* Non terminal */
 non terminal ini;
@@ -48,8 +48,8 @@ start with ini;
 /* production rules */
 ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctly" ); :};
 
-body ::= CONJ COLON ID ARROW option TILDE option SEMICOLON body {:  :}
-        | CONJ COLON ID ARROW option_2 SEMICOLON body           {: :}
+body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body {:  :}
+        | CONJ COLON ID ARROW1 ARROW2 option_2 SEMICOLON body           {: :}
         | ID ARROW re:var SEMICOLON body                        {:
                                                                     System.out.println("Reading a regular expresion " );
                                                                     results.add(regex.toString());

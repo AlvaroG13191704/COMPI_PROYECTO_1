@@ -29,7 +29,7 @@ CONJ: abecedarioMinus -> a~z; // declarando conjunto de letras desde a hasta z e
 CONJ: digito -> 0~5; // creamos el conjunto de digitos solo para 0, 1, 2, 3, 4 y 5
 
 //AGREGANDO EXPRESIONES REGULARES
-identificador - > . {abecedarioMinus} * | "_" | {abecedarioMinus} {digito}; //INFIJO: abecedarioMinus ("_"|abecedarioMinus|digito)*
+identificador -> . {abecedarioMinus} * | "_" | {abecedarioMinus} {digito}; //INFIJO: abecedarioMinus ("_"|abecedarioMinus|digito)*
 decimales -> . +{digito} . "." + {digito}; //INFIJO: digito+ "." digito+
 
 %%

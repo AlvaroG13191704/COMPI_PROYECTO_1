@@ -8,7 +8,7 @@ import java.util.List;
 %{
     StringBuffer string = new StringBuffer();
             // Array of errors
-    List<Exceptions> errors = new ArrayList<Exceptions>();
+    public List<Exceptions> errors = new ArrayList<Exceptions>();
 %}
 
 //Directives
@@ -79,10 +79,14 @@ NUMBER = [0-9]
         return new Symbol(ParserSym.ID,yyline, yycolumn, yytext());
       }
    /* Handle arrow */
-   "->" {
-        yybegin(POLISH);
-        return new Symbol(ParserSym.ARROW,yyline, yycolumn, yytext());
+   "-" {
+        return new Symbol(ParserSym.ARROW1,yyline, yycolumn, yytext());
       }
+     /* Handle arrow */
+     ">" {
+          yybegin(POLISH);
+          return new Symbol(ParserSym.ARROW2,yyline, yycolumn, yytext());
+        }
     /* Handle %% then move to analyze the matches */
     "%%" {
         return new Symbol(ParserSym.PERCENT,yyline, yycolumn, yytext());
@@ -170,11 +174,15 @@ NUMBER = [0-9]
     /* Handle identifiers */
     {ID} { return new Symbol(ParserSym.ID,yyline, yycolumn, yytext()); }
 
-    /* Handle arrow */
-    "->" {
-        yybegin(OPTIONS);
-        return new Symbol(ParserSym.ARROW,yyline, yycolumn, yytext());
+   /* Handle arrow */
+   "-" {
+        return new Symbol(ParserSym.ARROW1,yyline, yycolumn, yytext());
       }
+     /* Handle arrow */
+     ">" {
+          yybegin(OPTIONS);
+          return new Symbol(ParserSym.ARROW2,yyline, yycolumn, yytext());
+        }
 
     /* Handle ~ */
     "~" {
@@ -246,4 +254,10 @@ NUMBER = [0-9]
   \\r                            { string.append('\r'); }
   \\\"                           { string.append('\"'); }
   \\                             { string.append('\\'); }
+}
+
+/* Handle errors */
+. {
+    System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
+    errors.add(new Exceptions("Error Léxico",yytext(), "Caracter desconocido: ", yyline, yycolumn));
 }
