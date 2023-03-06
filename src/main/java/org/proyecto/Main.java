@@ -21,8 +21,8 @@ public class Main {
                                 
                                 
                 //EXPreg -> . |{letra} "2" * {nums};
-                //a -> .{digito}."."+{digito};
-                EXPreg2 -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
+                a -> .{digito}."."+{digito};
+                //EXPreg2 -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
                                 
                 %%
                 %%
