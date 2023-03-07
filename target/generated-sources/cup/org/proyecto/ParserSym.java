@@ -8,32 +8,31 @@ package org.proyecto;
 /** CUP generated interface containing symbol constants. */
 public interface ParserSym {
   /* terminals */
-  public static final int SIMB3 = 25;
-  public static final int SIMB2 = 24;
-  public static final int SIMB1 = 23;
-  public static final int PERCENT = 22;
-  public static final int QUESTION = 17;
-  public static final int SEMICOLON = 9;
-  public static final int PLUS = 15;
-  public static final int OR = 18;
+  public static final int SIMB3 = 24;
+  public static final int SIMB2 = 23;
+  public static final int SIMB1 = 22;
+  public static final int PERCENT = 21;
+  public static final int SEMICOLON = 8;
+  public static final int QUESTION = 16;
+  public static final int PLUS = 14;
+  public static final int OR = 17;
   public static final int RBRACE = 3;
-  public static final int STAR = 16;
-  public static final int ARROW2 = 8;
-  public static final int COLON = 10;
+  public static final int STAR = 15;
+  public static final int ARROW2 = 7;
+  public static final int COLON = 9;
   public static final int LBRACE = 2;
-  public static final int ARROW1 = 7;
+  public static final int ARROW1 = 6;
   public static final int ID = 5;
-  public static final int TILDE = 11;
-  public static final int LETTER = 13;
-  public static final int STRING = 21;
-  public static final int COMMA = 20;
+  public static final int TILDE = 10;
+  public static final int LETTER = 12;
+  public static final int STRING = 20;
+  public static final int COMMA = 19;
   public static final int EOF = 0;
-  public static final int NUMBER = 14;
+  public static final int NUMBER = 13;
   public static final int CONJ = 4;
-  public static final int DOT = 19;
+  public static final int DOT = 18;
   public static final int error = 1;
-  public static final int ARROW = 6;
-  public static final int SPECIAL = 12;
+  public static final int SPECIAL = 11;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -41,7 +40,6 @@ public interface ParserSym {
   "RBRACE",
   "CONJ",
   "ID",
-  "ARROW",
   "ARROW1",
   "ARROW2",
   "SEMICOLON",

@@ -28,6 +28,7 @@ public class Main {
                 //                       ----DEFINIENDO EXPRESIONES----
                 frase -> ."C"."O"."M"."P"."I"."1" ? + | | {letra} {digito} " ";
                 cadena  -> . \\' . + | | | | \\n {minus} {mayus} {digito} " " \\';
+                
                 %%
                 %%
                 cadena : "\\'cadena entre comilla simple\\'"; //bueno
@@ -36,6 +37,7 @@ public class Main {
                 }
                 """;
         ArrayList<Exceptions> errors = new ArrayList<>();
+
         Lexer lexer = new Lexer(new StringReader(expr));
         // generate reports
         System.out.println(lexer.errors);
@@ -46,33 +48,53 @@ public class Main {
         errors.addAll(parser.getErrors());
         generateHTMLErros(errors);
         // extact the array with the regular expressions
-        System.out.println(parser.results);
         System.out.println(parser.identifiersName);
-        System.out.println(parser.results.get(0));
-        // add to the arraylist # and the beginning and . and the end
-        String expresionString = "#," + parser.results.get(0).replace("[","").replace("]", "").replace(" ","") + ",.";
+        String regularExpression = parser.results.get(0);
+        // split the regular expression by NEXT
+        String[] regularExpressionArray = regularExpression.split("NEXT");
+        // remove the first element
+        String[] regularExpressionArrayNew = Arrays.copyOfRange(regularExpressionArray, 1, regularExpressionArray.length);
+        // iterate over the array
+        for (int i = 0; i < regularExpressionArrayNew.length; i++) {
+            // remove the first and last character
+            regularExpressionArrayNew[i] = regularExpressionArrayNew[i].substring(1, regularExpressionArrayNew[i].length() - 1);
+            System.out.println(regularExpressionArrayNew[i]);
+            // evaluate the index is the last of the array
+            String expresionString;
+            String replace = regularExpressionArrayNew[i].replace("[", "").replace("]", "");
+            if(i == regularExpressionArrayNew.length - 1){
+                // add to the arraylist # and the beginning and . and the end
+                expresionString = "#," + replace.replace(" ","") + ",.";
+            }else {
+                // add to the arraylist # and the beginning and . and the end
+                expresionString = "#," + replace.replace(" ","") + ".";
+            }
+            // GENERATE EACH TREE, TABLES AND AFD
+            // create arraylist
+            ArrayList<node> leaves = new ArrayList<>();
+            ArrayList<ArrayList> table = new ArrayList<>();
+            // Create the tree
+            Tree tree = new Tree(expresionString,leaves, table );
+            node raiz = tree.getRoot();
+            raiz.getNode(); // DETERMINA SI LOS NODOS SON ANULABLES, SUS PRIMEROS Y ULTIMOS
+            raiz.follow();
+            System.out.println("==============================VALORES NODO ULTIMO . Y TABLA HOJAS ==============================");
+            // Create a function to generate the graphviz code of the tree
+            System.out.println("        ");
+            raiz.generateGraphviz();
+            System.out.println("==============================TABLA SIGUIENTES==============================");
+            followTable ft = new followTable();
+            ft.printTable(table);
+            System.out.println("=============================TABLA TRANSICIONES=============================");
+            transitionTable tran = new transitionTable(raiz, table, leaves);
+            tran.impTable();
+            System.out.println("============================= GRAPHVIZ===============================================");
+            tran.impGraph();
+        }
 
 
-        // create arraylist
-        ArrayList<node> leaves = new ArrayList<>();
-        ArrayList<ArrayList> table = new ArrayList<>();
-        // Create the tree
-        Tree tree = new Tree(expresionString,leaves, table );
-        node raiz = tree.getRoot();
-        raiz.getNode(); // DETERMINA SI LOS NODOS SON ANULABLES, SUS PRIMEROS Y ULTIMOS
-        raiz.follow();
-        System.out.println("==============================VALORES NODO ULTIMO . Y TABLA HOJAS ==============================");
-        // Create a function to generate the graphviz code of the tree
-        System.out.println("        ");
-        raiz.generateGraphviz();
-        System.out.println("==============================TABLA SIGUIENTES==============================");
-        followTable ft = new followTable();
-        ft.printTable(table);
-        System.out.println("=============================TABLA TRANSICIONES=============================");
-        transitionTable tran = new transitionTable(raiz, table, leaves);
-        tran.impTable();
-        System.out.println("============================= GRAPHVIZ===============================================");
-        tran.impGraph();
+
+
     }
 
     public static void generateHTMLErros(ArrayList<Exceptions> errors) throws IOException {

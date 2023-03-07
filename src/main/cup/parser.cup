@@ -35,7 +35,7 @@ parser code
 
 
 /* Terminals */
-terminal  LBRACE, RBRACE, CONJ, ID,ARROW, ARROW1, ARROW2, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
+terminal  LBRACE, RBRACE, CONJ, ID, ARROW1, ARROW2, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
 terminal SIMB1, SIMB2, SIMB3;
 /* Non terminal */
 non terminal ini;
@@ -54,17 +54,18 @@ body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body {:  :}
                                                                     System.out.println("Reading a regular expresion " );
                                                                     identifiersName.add((String) id);
                                                                     results.add(regex.toString());
-                                                                    // Clean RESULT
-                                                                    RESULT = "";
                                                                  :}
         | PERCENT  body                                         {:  :}
         | ID COLON STRING SEMICOLON body                        {:  :}
         | /* empty */
         ;
 
-re ::=
+re ::= {:
+        regex.add("NEXT");
+    :}
       |SIMB1:var re:a            {:
                                     RESULT = regex.add((String) var);
+
                                 :}
       |SIMB2:var re:a            {:
                                     RESULT = regex.add((String) var);
@@ -83,12 +84,15 @@ re ::=
                                 :}
       |OR:var re:a                {:
                                     RESULT = regex.add((String) var);
+
                                 :}
       |DOT:var re:a               {:
                                     RESULT = regex.add((String) var);
+
                                 :}
       |LBRACE ID:var RBRACE re:a  {:
                                     RESULT = regex.add((String) var);
+
                                 :}
       |STRING:var re:a            {:
                                     RESULT = regex.add((String) "\""+ var + "\"");
