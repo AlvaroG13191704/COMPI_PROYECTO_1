@@ -15,7 +15,7 @@ parser code
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
     ArrayList<String> results = new ArrayList<String>();
     ArrayList<String> regex = new ArrayList<String>();
-
+    ArrayList<String> identifiersName = new ArrayList<String>();
     // List of errors
     List<Exceptions> errors = new ArrayList();
     // Method to add errors
@@ -36,7 +36,7 @@ parser code
 
 /* Terminals */
 terminal  LBRACE, RBRACE, CONJ, ID,ARROW, ARROW1, ARROW2, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
-
+terminal SIMB1, SIMB2, SIMB3;
 /* Non terminal */
 non terminal ini;
 non terminal body;
@@ -50,9 +50,12 @@ ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctl
 
 body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body {:  :}
         | CONJ COLON ID ARROW1 ARROW2 option_2 SEMICOLON body           {: :}
-        | ID ARROW1 ARROW2 re:var SEMICOLON body                        {:
+        | ID:id ARROW1 ARROW2 re:var SEMICOLON body                        {:
                                                                     System.out.println("Reading a regular expresion " );
+                                                                    identifiersName.add((String) id);
                                                                     results.add(regex.toString());
+                                                                    // Clean RESULT
+                                                                    RESULT = "";
                                                                  :}
         | PERCENT  body                                         {:  :}
         | ID COLON STRING SEMICOLON body                        {:  :}
@@ -60,32 +63,34 @@ body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body {:  :}
         ;
 
 re ::=
+      |SIMB1:var re:a            {:
+                                    RESULT = regex.add((String) var);
+                                :}
+      |SIMB2:var re:a            {:
+                                    RESULT = regex.add((String) var);
+                                :}
+      |SIMB3:var re:a            {:
+                                    RESULT = regex.add((String) var);
+                                :}
       |PLUS:var re:a              {:
-                                    System.out.println(var);
                                     RESULT = regex.add((String) var);
                                 :}
       |STAR:var re:a              {:
-                                    System.out.println(var);
                                     RESULT = regex.add((String) var);
                                 :}
       |QUESTION:var re:a          {:
-                                    System.out.println(var);
                                     RESULT = regex.add((String) var);
                                 :}
       |OR:var re:a                {:
-                                    System.out.println( var);
                                     RESULT = regex.add((String) var);
                                 :}
       |DOT:var re:a               {:
-                                    System.out.println( var);
                                     RESULT = regex.add((String) var);
                                 :}
       |LBRACE ID:var RBRACE re:a  {:
-                                    System.out.println(var);
                                     RESULT = regex.add((String) var);
                                 :}
       |STRING:var re:a            {:
-                                    System.out.println( var);
                                     RESULT = regex.add((String) "\""+ var + "\"");
                                 :}
       ;

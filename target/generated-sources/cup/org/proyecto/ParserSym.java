@@ -8,6 +8,9 @@ package org.proyecto;
 /** CUP generated interface containing symbol constants. */
 public interface ParserSym {
   /* terminals */
+  public static final int SIMB3 = 25;
+  public static final int SIMB2 = 24;
+  public static final int SIMB1 = 23;
   public static final int PERCENT = 22;
   public static final int QUESTION = 17;
   public static final int SEMICOLON = 9;
@@ -54,7 +57,10 @@ public interface ParserSym {
   "DOT",
   "COMMA",
   "STRING",
-  "PERCENT"
+  "PERCENT",
+  "SIMB1",
+  "SIMB2",
+  "SIMB3"
   };
 }
 

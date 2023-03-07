@@ -116,6 +116,12 @@ NUMBER = [0-9]
       }
    /* Ignore whitespace */
    [ \t\r\n]+ { /* ignore */ }
+    /* Handle symbol \n */
+    \\n {return new Symbol(ParserSym.SIMB1,yyline, yycolumn, yytext());}
+    /* Handle symbol \' */
+    \\' {return new Symbol(ParserSym.SIMB2,yyline, yycolumn, yytext());}
+    /* Handle symbol \" */
+    \\\" {return new Symbol(ParserSym.SIMB3,yyline, yycolumn, yytext());}
    /* Handle + */
    "+" {return new Symbol(ParserSym.PLUS,yyline, yycolumn, yytext());}
    /* Handle * */

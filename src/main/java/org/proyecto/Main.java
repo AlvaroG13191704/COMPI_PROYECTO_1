@@ -23,11 +23,11 @@ public class Main {
                 CONJ: mayus - > A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
                 CONJ: minus -     > a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z;
                 CONJ: letra -  > a~z;
-                CONJ: digito -  > 0~9;\s
+                CONJ: digito -  > 0~9;
 
                 //                       ----DEFINIENDO EXPRESIONES----
                 frase -> ."C"."O"."M"."P"."I"."1" ? + | | {letra} {digito} " ";
-                cadena  -   > . \\' . + | | | | \\n {minus} {mayus} {digito} " " \\';
+                cadena  -> . \\' . + | | | | \\n {minus} {mayus} {digito} " " \\';
                 %%
                 %%
                 cadena : "\\'cadena entre comilla simple\\'"; //bueno
@@ -46,6 +46,8 @@ public class Main {
         errors.addAll(parser.getErrors());
         generateHTMLErros(errors);
         // extact the array with the regular expressions
+        System.out.println(parser.results);
+        System.out.println(parser.identifiersName);
         System.out.println(parser.results.get(0));
         // add to the arraylist # and the beginning and . and the end
         String expresionString = "#," + parser.results.get(0).replace("[","").replace("]", "").replace(" ","") + ",.";
