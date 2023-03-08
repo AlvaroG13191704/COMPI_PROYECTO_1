@@ -1,4 +1,5 @@
 package org.proyecto.treeMethod;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Stack;
@@ -133,7 +134,7 @@ public class node {
         return this;
     }
 
-    public void generateGraphviz() {
+    public void generateGraphviz(String name) {
         StringBuilder graphviz = new StringBuilder();
         graphviz.append("digraph syntax_tree {\n");
         graphviz.append("node [fontname=Helvetica, fontsize=12];\n");
@@ -143,7 +144,22 @@ public class node {
 
         buildGraphvizTree(this, identifier, graphviz);
         graphviz.append("}");
-        System.out.println(graphviz);
+        //System.out.println(graphviz);
+        // generate the dot and image
+        File file = new File("src/main/reports/ARBOLES_202109567/"+name+".dot");
+        try{
+            java.io.FileWriter fw = new java.io.FileWriter(file);
+            fw.write(graphviz.toString());
+            fw.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            Runtime.getRuntime().exec("dot -Tpng src/main/reports/ARBOLES_202109567/"+name+".dot -o src/main/reports/ARBOLES_202109567/"+name+".png");
+            System.out.println("Graphviz generated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public node getNodeVoid(){
         // This is a recursive method, go the deepest node and evaluate until the root

@@ -5,6 +5,7 @@ import org.proyecto.treeMethod.leave;
 import org.proyecto.treeMethod.node;
 import org.proyecto.treeMethod.transicion;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -103,7 +104,7 @@ public class transitionTable {
         }
     }
 
-    public void impTable(){
+    public void impTable(String name){
         String graphviz = "digraph transitionTable {\n";
         graphviz += "n[shape=none label = <\n" +
                 " <TABLE border=\"0\" cellspacing=\"0\" cellpadding=\"10\" style=\"collapse\">\n" +
@@ -160,10 +161,25 @@ public class transitionTable {
         graphviz += " </TABLE>\n" +
                 ">];\n" +
                 "}";
-        System.out.println(graphviz);
+        //System.out.println(graphviz);
+        // generate the dot and image
+        File file = new File("src/main/reports/TRANSICIONES_202109567/"+name+".dot");
+        try{
+            java.io.FileWriter fw = new java.io.FileWriter(file);
+            fw.write(graphviz);
+            fw.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            Runtime.getRuntime().exec("dot -Tpng src/main/reports/TRANSICIONES_202109567/"+name+".dot -o src/main/reports/TRANSICIONES_202109567/"+name+".png");
+            System.out.println("Graphviz generated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void impGraph(){
+    public void impGraph(String name){
         String graph = "digraph AFD {\n";
         graph += "fontname=\"Helvetica,Arial,sans-serif\";\n";
         graph += "node [fontname=\"Helvetica,Arial,sans-serif\"]\n";
@@ -184,7 +200,22 @@ public class transitionTable {
             }
         }
         graph += "}";
-        System.out.println(graph);
+        //System.out.println(graph);
+        // generate the dot and image
+        File file = new File("src/main/reports/AFD_202109567/"+name+".dot");
+        try{
+            java.io.FileWriter fw = new java.io.FileWriter(file);
+            fw.write(graph);
+            fw.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            Runtime.getRuntime().exec("dot -Tpng src/main/reports/AFD_202109567/"+name+".dot -o src/main/reports/AFD_202109567/"+name+".png");
+            System.out.println("Graphviz generated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

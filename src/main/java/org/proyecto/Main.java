@@ -47,8 +47,8 @@ public class Main {
         // errors
         errors.addAll(parser.getErrors());
         generateHTMLErros(errors);
-        // extact the array with the regular expressions
-        System.out.println(parser.identifiersName);
+        // reverse the arraylist
+        Collections.reverse(parser.identifiersName);
         String regularExpression = parser.results.get(0);
         // split the regular expression by NEXT
         String[] regularExpressionArray = regularExpression.split("NEXT");
@@ -56,6 +56,8 @@ public class Main {
         String[] regularExpressionArrayNew = Arrays.copyOfRange(regularExpressionArray, 1, regularExpressionArray.length);
         // iterate over the array
         for (int i = 0; i < regularExpressionArrayNew.length; i++) {
+            // get the name of the regular expresion
+            String regularExpresionName = parser.identifiersName.get(i);
             // remove the first and last character
             regularExpressionArrayNew[i] = regularExpressionArrayNew[i].substring(1, regularExpressionArrayNew[i].length() - 1);
             System.out.println(regularExpressionArrayNew[i]);
@@ -80,28 +82,23 @@ public class Main {
             raiz.follow();
             System.out.println("==============================VALORES NODO ULTIMO . Y TABLA HOJAS ==============================");
             // Create a function to generate the graphviz code of the tree
-            System.out.println("        ");
-            raiz.generateGraphviz();
+            raiz.generateGraphviz(regularExpresionName);
             System.out.println("==============================TABLA SIGUIENTES==============================");
             followTable ft = new followTable();
-            ft.printTable(table);
+            ft.printTable(table,regularExpresionName);
             System.out.println("=============================TABLA TRANSICIONES=============================");
             transitionTable tran = new transitionTable(raiz, table, leaves);
-            tran.impTable();
+            tran.impTable(regularExpresionName);
             System.out.println("============================= GRAPHVIZ===============================================");
-            tran.impGraph();
+            tran.impGraph(regularExpresionName);
         }
-
-
-
-
     }
 
     public static void generateHTMLErros(ArrayList<Exceptions> errors) throws IOException {
         FileWriter fichero = null;
         PrintWriter pw = null;
         try {
-            fichero = new FileWriter("errors.html");
+            fichero = new FileWriter("src/main/reports/ERRORES_202109567/error.html");
             pw = new PrintWriter(fichero);
             pw.println("<!DOCTYPE html>");
             pw.println("<html lang=\"en\">");

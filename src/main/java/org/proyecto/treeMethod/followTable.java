@@ -1,5 +1,6 @@
 package org.proyecto.treeMethod;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -38,7 +39,7 @@ public class followTable {
         return result;
     }
 
-    public void printTable(ArrayList<ArrayList> table){
+    public void printTable(ArrayList<ArrayList> table, String name){
         // build a table in graphviz format
         StringBuilder tableString = new StringBuilder("digraph followTable {\n");
         tableString.append("node [shape=plaintext];\n");
@@ -62,6 +63,21 @@ public class followTable {
         tableString.append("</table>\n");
         tableString.append(">]\n;");
         tableString.append("}");
-        System.out.println(tableString);
+        //System.out.println(tableString);
+        // generate the dot and image
+        File file = new File("src/main/reports/SIGUIENTES_202109567/"+name+".dot");
+        try{
+            java.io.FileWriter fw = new java.io.FileWriter(file);
+            fw.write(tableString.toString());
+            fw.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            Runtime.getRuntime().exec("dot -Tpng src/main/reports/SIGUIENTES_202109567/"+name+".dot -o src/main/reports/SIGUIENTES_202109567/"+name+".png");
+            System.out.println("Graphviz generated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

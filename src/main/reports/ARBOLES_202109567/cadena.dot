@@ -1,0 +1,35 @@
+digraph syntax_tree {
+node [fontname=Helvetica, fontsize=12];
+edge [arrowhead=vee, arrowtail=none];
+node0 [label="false \n F[1] \n L[8] \n . "];
+node0 -> node1;
+node1 [label="false \n F[1] \n L[7] \n . "];
+node1 -> node2;
+node2 [label="false \n F[1] \n L[1] \n\'\n 1 "];
+node1 -> node4;
+node4 [label="false \n F[2, 3, 4, 5, 6] \n L[7] \n . "];
+node4 -> node5;
+node5 [label="false \n F[2, 3, 4, 5, 6] \n L[2, 3, 4, 5, 6] \n + "];
+node5 -> node6;
+node6 [label="false \n F[2, 3, 4, 5, 6, 7] \n L[2, 3, 4, 5, 6] \n | "];
+node6 -> node7;
+node7 [label="false \n F[2, 3, 4, 5] \n L[2, 3, 4, 5] \n | "];
+node7 -> node8;
+node8 [label="false \n F[2, 3, 4] \n L[2, 3, 4] \n | "];
+node8 -> node9;
+node9 [label="false \n F[2, 3] \n L[2, 3] \n | "];
+node9 -> node10;
+node10 [label="false \n F[2] \n L[2] \n\n\n 2 "];
+node9 -> node12;
+node12 [label="false \n F[3] \n L[3] \nminus\n 3 "];
+node8 -> node15;
+node15 [label="false \n F[4] \n L[4] \nmayus\n 4 "];
+node7 -> node18;
+node18 [label="false \n F[5] \n L[5] \ndigito\n 5 "];
+node6 -> node21;
+node21 [label="false \n F[6] \n L[6] \n\n 6 "];
+node4 -> node25;
+node25 [label="false \n F[7] \n L[7] \n\'\n 7 "];
+node0 -> node29;
+node29 [label="false \n F[8] \n L[8] \n#\n 8 "];
+}
