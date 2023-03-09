@@ -8,7 +8,13 @@ import java.util.List;
 %{
     StringBuffer string = new StringBuffer();
     // Array of errors
-    List<LexicalError> errors = new ArrayList<>();
+    ArrayList<LexicalError> errors = new ArrayList();
+
+    // function
+    public void emit_error(LexicalError error) {
+        System.err.println("Error: Line " + error.getLine() + ", Column " + error.getColumn() + ": " + error.getLexema());
+        errors.add(error);
+    }
 %}
 
 //Directives
@@ -48,7 +54,7 @@ NUMBER = [0-9]
 %%
 
 // errors
-
+/* error handling */
 <YYINITIAL> {
     /* Handle static regular expressions */
     "{" { return new Symbol(ParserSym.LBRACE,yyline, yycolumn, yytext()); }
@@ -106,8 +112,7 @@ NUMBER = [0-9]
       }
     /* Handle errors */
     [^] {
-          errors.add(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
-        System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
+        emit_error(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
       }
 }
 <POLISH>{
@@ -144,9 +149,9 @@ NUMBER = [0-9]
         string.setLength(0);
       }
      /* Handle errors */
+    /* Handle errors */
     [^] {
-          errors.add(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
-        System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
+        emit_error(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
       }
    }
 
@@ -159,9 +164,9 @@ NUMBER = [0-9]
           return new Symbol(ParserSym.RBRACE,yyline, yycolumn, yytext());
       }
     /* Handle errors */
+    /* Handle errors */
     [^] {
-          errors.add(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
-        System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
+        emit_error(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
       }
 }
 
@@ -203,9 +208,9 @@ NUMBER = [0-9]
       }
 
     /* Handle errors */
+    /* Handle errors */
     [^] {
-          errors.add(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
-        System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
+        emit_error(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
       }
 }
 
@@ -233,8 +238,7 @@ NUMBER = [0-9]
 
     /* Handle errors */
     [^] {
-          errors.add(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
-        System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
+        emit_error(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
       }
 }
 
@@ -262,7 +266,7 @@ NUMBER = [0-9]
   \\                             { string.append('\\'); }
 }
 
-    [^] {
-          errors.add(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
-        System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
-      }
+    /* Handle errors */
+[^] {
+    emit_error(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
+  }

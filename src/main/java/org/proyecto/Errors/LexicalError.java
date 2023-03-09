@@ -1,5 +1,10 @@
 package org.proyecto.Errors;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class LexicalError extends Throwable {
+
     private String type;
     private int line;
     private int column;

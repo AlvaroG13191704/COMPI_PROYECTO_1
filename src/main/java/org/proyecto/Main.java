@@ -10,8 +10,10 @@ import java.io.StringReader;
 import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
+
+
 
         String expr = """
                 {
@@ -24,8 +26,8 @@ public class Main {
 
                 //                       ----DEFINIENDO EXPRESIONES----
                 frase -> ."C"."O"."M"."P"."I"."1" ? + | | {letra} {digito} " ";
-                cadena  -> . \\' . + | | | | \\n {minus} {mayus} {digito} " " \\';
-                kevinExp -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
+                cadena  -> . \\' . + | | | |  \\n [{minus} {mayus} {digito} " " \\';
+                kevinExp -> . . |{letra} "2" * {nums} ( . | * |{separados} {mayus} "x" {separados};
                 %%
                 %%
                 cadena : "\\'cadena entre comilla simple\\'"; //bueno
@@ -36,15 +38,14 @@ public class Main {
 
 
         Lexer lexer = new Lexer(new StringReader(expr));
-        // generate reports
-        List<LexicalError> errors = lexer.errors;
-        System.out.println(errors);
-        //errors.addAll(lexer.errors);
         Parser parser = new Parser(lexer);
         parser.parse();
         // errors
-        //errors.addAll(parser.getErrors());
-        //generateHTMLErros(errors);
+        ArrayList<LexicalError> errors = new ArrayList<>();
+        ArrayList<LexicalError> errorsLexer = lexer.errors;
+        errors.addAll(errorsLexer);
+        errors.addAll(parser.getErrors());
+        generateHTMLErros(errors);
         // reverse the arraylist
         Collections.reverse(parser.identifiersName);
         String regularExpression = parser.results.get(0);
@@ -131,11 +132,11 @@ public class Main {
             pw.println("</tr>");
             for (LexicalError error : errors) {
                 pw.println("<tr>");
-                pw.println("<td>" + "Error Léxico" + "</td>");
+                pw.println("<td>" + error.getType() + "</td>");
                 pw.println("<td>" + error.getLexema() + "</td>");
                 pw.println("<td>" + error.getMessage() + "</td>");
                 pw.println("<td>" + error.getLine() + "</td>");
-                pw.println("<td>" + error.getLexema() + "</td>");
+                pw.println("<td>" + error.getColumn() + "</td>");
                 pw.println("</tr>");
             }
             pw.println("</table>");

@@ -322,7 +322,13 @@ public class Lexer implements java_cup.runtime.Scanner {
   /* user code: */
     StringBuffer string = new StringBuffer();
     // Array of errors
-    List<LexicalError> errors = new ArrayList<>();
+    ArrayList<LexicalError> errors = new ArrayList();
+
+    // function
+    public void emit_error(LexicalError error) {
+        System.err.println("Error: Line " + error.getLine() + ", Column " + error.getColumn() + ": " + error.getLexema());
+        errors.add(error);
+    }
 
 
   /**
@@ -754,8 +760,7 @@ public class Lexer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { errors.add(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
-        System.err.println("Error: Line " + yyline + ", Column " + yycolumn + ": Unknow character: " + yytext());
+            { emit_error(new LexicalError("Error Léxico", yyline, yycolumn, "Caracter desconocido: ",yytext()));
             }
           // fall through
           case 41: break;
