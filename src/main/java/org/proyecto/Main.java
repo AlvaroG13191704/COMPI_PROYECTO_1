@@ -1,16 +1,13 @@
 package org.proyecto;
 
-import org.proyecto.Errors.Exceptions;
+import org.proyecto.Errors.LexicalError;
 import org.proyecto.treeMethod.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -28,7 +25,7 @@ public class Main {
                 //                       ----DEFINIENDO EXPRESIONES----
                 frase -> ."C"."O"."M"."P"."I"."1" ? + | | {letra} {digito} " ";
                 cadena  -> . \\' . + | | | | \\n {minus} {mayus} {digito} " " \\';
-                
+                kevinExp -> . . |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
                 %%
                 %%
                 cadena : "\\'cadena entre comilla simple\\'"; //bueno
@@ -36,17 +33,18 @@ public class Main {
 
                 }
                 """;
-        ArrayList<Exceptions> errors = new ArrayList<>();
+
 
         Lexer lexer = new Lexer(new StringReader(expr));
         // generate reports
-        System.out.println(lexer.errors);
-        errors.addAll(lexer.errors);
+        List<LexicalError> errors = lexer.errors;
+        System.out.println(errors);
+        //errors.addAll(lexer.errors);
         Parser parser = new Parser(lexer);
         parser.parse();
         // errors
-        errors.addAll(parser.getErrors());
-        generateHTMLErros(errors);
+        //errors.addAll(parser.getErrors());
+        //generateHTMLErros(errors);
         // reverse the arraylist
         Collections.reverse(parser.identifiersName);
         String regularExpression = parser.results.get(0);
@@ -94,7 +92,7 @@ public class Main {
         }
     }
 
-    public static void generateHTMLErros(ArrayList<Exceptions> errors) throws IOException {
+    public static void generateHTMLErros(ArrayList<LexicalError> errors) throws IOException {
         FileWriter fichero = null;
         PrintWriter pw = null;
         try {
@@ -131,13 +129,13 @@ public class Main {
             pw.println("<th>Linea</th>");
             pw.println("<th>Columna</th>");
             pw.println("</tr>");
-            for (Exceptions error : errors) {
+            for (LexicalError error : errors) {
                 pw.println("<tr>");
-                pw.println("<td>" + error.type + "</td>");
-                pw.println("<td>" + error.value + "</td>");
-                pw.println("<td>" + error.description + "</td>");
-                pw.println("<td>" + error.line + "</td>");
-                pw.println("<td>" + error.col + "</td>");
+                pw.println("<td>" + "Error Léxico" + "</td>");
+                pw.println("<td>" + error.getLexema() + "</td>");
+                pw.println("<td>" + error.getMessage() + "</td>");
+                pw.println("<td>" + error.getLine() + "</td>");
+                pw.println("<td>" + error.getLexema() + "</td>");
                 pw.println("</tr>");
             }
             pw.println("</table>");

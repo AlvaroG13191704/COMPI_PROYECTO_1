@@ -1,0 +1,72 @@
+digraph transitionTable {
+n[shape=none label = <
+ <TABLE border="0" cellspacing="0" cellpadding="10" style="collapse">
+  <TR >
+  <TD rowspan="2" colspan="1" border="1">ESTADOS</TD>
+  <TD colspan="6" border="1">Terminales</TD>
+  </TR>
+  <TR>
+  <TD border="1">letra</TD>
+  <TD border="1">"2"</TD>
+  <TD border="1">nums</TD>
+  <TD border="1">separados</TD>
+  <TD border="1">mayus</TD>
+  <TD border="1">"x"</TD>
+  </TR>
+  <TR>
+  <TD border="1">S0 [1, 2]</TD>
+  <TD border="1"> S1</TD>
+  <TD border="1"> S1</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  </TR>
+  <TR>
+  <TD border="1">S1 [3, 4, 5, 6, 7]</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1"> S1</TD>
+  <TD border="1"> S3</TD>
+  <TD border="1"> S4</TD>
+  <TD border="1"> S2</TD>
+  </TR>
+  <TR>
+  <TD border="1">S2 [7]</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1"> S5</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  </TR>
+  <TR>
+  <TD border="1">S3 [4, 5, 7, 8]</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1"> S3</TD>
+  <TD border="1"> S4</TD>
+  <TD border="1">---</TD>
+  </TR>
+  <TR>
+  <TD border="1">S4 [4, 5, 7]</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1"> S3</TD>
+  <TD border="1"> S4</TD>
+  <TD border="1">---</TD>
+  </TR>
+  <TR>
+  <TD border="1">S5 [8]</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  </TR>
+ </TABLE>
+>];
+}

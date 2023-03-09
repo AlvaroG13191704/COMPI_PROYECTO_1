@@ -9,7 +9,7 @@ import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
-import org.proyecto.Errors.Exceptions;
+import org.proyecto.Errors.LexicalError;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -182,18 +182,18 @@ public class Parser extends java_cup.runtime.lr_parser {
     ArrayList<String> regex = new ArrayList<String>();
     ArrayList<String> identifiersName = new ArrayList<String>();
     // List of errors
-    List<Exceptions> errors = new ArrayList();
+    List<LexicalError> errors = new ArrayList();
     // Method to add errors
     public void syntax_error(Symbol s) {
-        errors.add(new Exceptions("Error Sintáctico", (String) s.value, "Error sintáctico detectado", s.left, s.right));
+        errors.add(new LexicalError("Error sintactico: ", s.left, s.left, "Error Sintatico: " , (String) s.value));
     }
     //Unrecovered syntax error detected.
      public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
-        errors.add(new Exceptions("Error Sintáctico", (String) s.value, "Error sintáctico detectado sin recuperación", s.left, s.right));
+        errors.add(new LexicalError("Error sintactico: ", s.left, s.left, "Error Sintatico: " , (String) s.value));
      }
 
-     public ArrayList<Exceptions> getErrors(){
-         return (ArrayList<Exceptions>) errors;
+     public ArrayList<LexicalError> getErrors(){
+         return (ArrayList<LexicalError>) errors;
      }
 
 
