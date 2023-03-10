@@ -16,8 +16,6 @@ public class test {
         states.add("S6");
         // Create the alphabet
         Map<String, List<String>> alphabet = new HashMap<>();
-        alphabet.put("mayus", Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
-        alphabet.put("minus", Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"));
         alphabet.put("letra", Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"));
         alphabet.put("digito", Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
         // Transitions
@@ -81,5 +79,7 @@ public class test {
         System.out.println("Initial state: " + initialState);
         System.out.println("Final states: " + finalStates);
 
+        // TEST
+        afd.accept("COMPI1 ");
     }
 }

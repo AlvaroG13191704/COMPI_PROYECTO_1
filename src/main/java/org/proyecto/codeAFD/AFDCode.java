@@ -30,7 +30,22 @@ public class AFDCode {
                 if (transition.containsKey(String.valueOf(c))) {
                     // change the current state
                     currentState = transition.get(String.valueOf(c));
+                    System.out.println("Current state: " + currentState + " with character: " + c);
                     break;
+                }else {
+                    // if the transition doesn't have the character
+                    //System.out.println("Current state: " + currentState + " with character: " + c + " -> is inside of one of this keys "+ transition.keySet());
+                    // This means that the next character owns to a set of characters that is in the alphabet
+                    // Find the character inside the alphabet
+                    for (Map.Entry<String, List<String>> entry : alphabet.entrySet()) {
+                        // if the character is inside the alphabet
+                        if (entry.getValue().contains(String.valueOf(c))) {
+                            // change the current state
+                            currentState = transition.get(entry.getKey());
+                            System.out.println("This character: " + c + " -> is inside of " + entry.getKey());
+                            break;
+                        }
+                    }
                 }
             }
         }
