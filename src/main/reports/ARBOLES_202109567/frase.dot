@@ -39,7 +39,7 @@ node23 [label="false \n F[7] \n L[7] \nletra\n 7 "];
 node22 -> node25;
 node25 [label="false \n F[8] \n L[8] \ndigito\n 8 "];
 node21 -> node28;
-node28 [label="false \n F[9] \n L[9] \n\n 9 "];
+node28 [label="false \n F[9] \n L[9] \n \n 9 "];
 node0 -> node39;
 node39 [label="false \n F[10] \n L[10] \n#\n 10 "];
 }

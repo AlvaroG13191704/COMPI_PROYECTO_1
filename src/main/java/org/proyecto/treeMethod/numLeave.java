@@ -24,8 +24,10 @@ public final class numLeave {
         for (String s : contentSplit) {
             if (s.equals("|") || s.equals(".") || s.equals("*") || s.equals("+") || s.equals("?")) {
                 // delete
-                contentSplit = Arrays.stream(contentSplit).filter(x -> !x.equals(s)).toArray(String[]::new);
+                String finalS = s;
+                contentSplit = Arrays.stream(contentSplit).filter(x -> !x.equals(finalS)).toArray(String[]::new);
             }
+
         }
         return contentSplit.length;
     }

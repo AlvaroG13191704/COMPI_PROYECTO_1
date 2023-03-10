@@ -90,13 +90,8 @@ public class transitionTable {
                     nuevo.add(new ArrayList());
                     states.add(nuevo);
                     // add the accept state
-                    //System.out.println("nuevo: " + nuevo);
 
                 }
-
-                //System.out.println( "trans: "+ state.get(0) +  entrada.getKey() +  nombreEstadoSiguiente);
-                //System.out.println(" ---------------------------- ");
-
                 transicion trans = new transicion(state.get(0) + "", entrada.getKey(), nombreEstadoSiguiente);
                 ((ArrayList)state.get(2)).add(trans);
                 ((ArrayList)state.get(4)).add(trans.toArray());

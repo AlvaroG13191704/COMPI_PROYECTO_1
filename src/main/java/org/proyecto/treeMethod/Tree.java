@@ -13,10 +13,12 @@ public class Tree {
         numLeave numHoja = new numLeave(er); // count the number of leaves
         Stack pila = new Stack(); // will help to build the tree
 
-        String[] expReg = er.split(","); // split the string to evaluate each character
+        String[] expReg =  er.replace("asci32"," ").split(","); // split the string to evaluate each character
         // [#, digito, +, ".", ., digito, ., .]
         // [nodo. ]
         ArrayList<String> strList = new ArrayList<>( Arrays.asList(expReg));// make te
+        // if the strList contains "space" change to " "
+
         System.out.println(strList);
 
         strList.forEach((character) -> {

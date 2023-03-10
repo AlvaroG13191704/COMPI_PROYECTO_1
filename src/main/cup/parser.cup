@@ -96,7 +96,11 @@ re ::= {:
 
                                 :}
       |STRING:var re:a            {:
-                                    RESULT = regex.add((String) "\""+ var + "\"");
+                                    if(var.equals(" ")){
+                                        RESULT = regex.add("\""+ "asci32" + "\"");
+                                    }else {
+                                        RESULT = regex.add((String) "\""+ var + "\"");
+                                    }
                                 :}
       ;
 

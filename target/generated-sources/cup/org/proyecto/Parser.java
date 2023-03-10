@@ -489,7 +489,11 @@ class CUP$Parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-                                    RESULT = regex.add((String) "\""+ var + "\"");
+                                    if(var.equals(" ")){
+                                        RESULT = regex.add("\""+ "asci32" + "\"");
+                                    }else {
+                                        RESULT = regex.add((String) "\""+ var + "\"");
+                                    }
                                 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("re",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }

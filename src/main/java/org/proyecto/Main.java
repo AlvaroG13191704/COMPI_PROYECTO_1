@@ -26,8 +26,8 @@ public class Main {
 
                 //                       ----DEFINIENDO EXPRESIONES----
                 frase -> ."C"."O"."M"."P"."I"."1" ? + | | {letra} {digito} " ";
-                cadena  -> . \\' . + | | | |  \\n [{minus} {mayus} {digito} " " \\';
-                kevinExp -> . . |{letra} "2" * {nums} ( . | * |{separados} {mayus} "x" {separados};
+                //cadena  -> . \\' . + | | | |  \\n {minus} {mayus} {digito} " " \\';
+                //kevinExp -> . . |{letra} "2" * {nums}  . | * |{separados} {mayus} "x" {separados};
                 %%
                 %%
                 cadena : "\\'cadena entre comilla simple\\'"; //bueno
