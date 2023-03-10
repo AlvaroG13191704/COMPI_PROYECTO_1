@@ -6,21 +6,48 @@ n[shape=none label = <
   <TD colspan="6" border="1">Terminales</TD>
   </TR>
   <TR>
-  <TD border="1">abecedarioMinus</TD>
-  <TD border="1">"_"</TD>
+  <TD border="1">\'</TD>
+  <TD border="1">\n</TD>
+  <TD border="1">minus</TD>
+  <TD border="1">mayus</TD>
   <TD border="1">digito</TD>
+  <TD border="1">" "</TD>
   </TR>
   <TR>
   <TD border="1">S0 [1]</TD>
   <TD border="1"> S1</TD>
   <TD border="1">---</TD>
   <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
   </TR>
   <TR>
-  <TD border="1">S1 [2, 3, 4, 5]</TD>
-  <TD border="1"> S1</TD>
-  <TD border="1"> S1</TD>
-  <TD border="1"> S1</TD>
+  <TD border="1">S1 [2, 3, 4, 5, 6]</TD>
+  <TD border="1">---</TD>
+  <TD border="1"> S2</TD>
+  <TD border="1"> S2</TD>
+  <TD border="1"> S2</TD>
+  <TD border="1"> S2</TD>
+  <TD border="1"> S2</TD>
+  </TR>
+  <TR>
+  <TD border="1">S2 [2, 3, 4, 5, 6, 7]</TD>
+  <TD border="1"> S3</TD>
+  <TD border="1"> S2</TD>
+  <TD border="1"> S2</TD>
+  <TD border="1"> S2</TD>
+  <TD border="1"> S2</TD>
+  <TD border="1"> S2</TD>
+  </TR>
+  <TR>
+  <TD border="1">S3 [8]</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
+  <TD border="1">---</TD>
   </TR>
  </TABLE>
 >];
