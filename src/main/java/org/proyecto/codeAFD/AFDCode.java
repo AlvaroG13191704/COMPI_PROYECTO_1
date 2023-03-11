@@ -20,36 +20,57 @@ public class AFDCode {
     }
 
 
+    private boolean evaluateAlphabet(String character){
+        // iterate over the alphabet
+        for(Map.Entry<String, List<String>> entry : alphabet.entrySet()){
+            // if the character is inside of the alphabet, return true
+            if(entry.getValue().contains(character)){
+                return true;
+            }
+        }
+        // if the character is not inside of the alphabet, return false
+        return false;
+    }
+    private boolean isFinalState(String state) {
+        return finalStates.contains(state);
+    }
+
     public boolean accept(String word) {
         String currentState = initialState; // start in the initial state
         // iterate over the word
         for( char c: word.toCharArray()) {
             // First search de intialState in the transitions
-            for (Map<String, String> transition : transitions.get(currentState)) {
-                // if the transition has the character
-                if (transition.containsKey(String.valueOf(c))) {
-                    // change the current state
-                    currentState = transition.get(String.valueOf(c));
-                    System.out.println("Current state: " + currentState + " with character: " + c);
-                    break;
-                }else {
-                    // if the transition doesn't have the character
-                    //System.out.println("Current state: " + currentState + " with character: " + c + " -> is inside of one of this keys "+ transition.keySet());
-                    // This means that the next character owns to a set of characters that is in the alphabet
-                    // Find the character inside the alphabet
-                    for (Map.Entry<String, List<String>> entry : alphabet.entrySet()) {
-                        // if the character is inside the alphabet
-                        if (entry.getValue().contains(String.valueOf(c))) {
-                            // change the current state
-                            currentState = transition.get(entry.getKey());
-                            System.out.println("This character: " + c + " -> is inside of " + entry.getKey());
-                            break;
+            for(Map<String, String> transition : transitions.get(currentState) ){
+                // if the array is equal to 1, evaluate literals
+                if(transition.size() == 1){
+                    // if the transition contains the current character, change the current state
+                    if(transition.containsKey(String.valueOf(c))){
+                        currentState = transition.get(String.valueOf(c));
+                        System.out.println("Current state: " + currentState + " with character: " + c + " has a one element transition");
+                        break;
+                    }else {
+                        System.out.println("Current state: " + currentState + " with character: " + c + " has a one element transition but doesn't match");
+                        return false;
+                    }
+                } else if (transition.size() > 1 ){
+                    // if the key array contains the current character, change the current state
+                    if(transition.containsKey(String.valueOf(c))){
+                        currentState = transition.get(String.valueOf(c));
+                        System.out.println("Current state: " + currentState + " with character: " + c + " has a more than one element transition but match with the key");
+                        break;
+                    } else {
+                        // if the key array doesn't contains the current character, check if the key array contains the current character type
+                        if(evaluateAlphabet(String.valueOf(c))){
+                            System.out.println("Current state: " + currentState + " with character: " + c + " is on the alphabet");
+                        }else {
+                            System.out.println("Current state: " + currentState + " with character: " + c + " is not on the alphabet");
+                            return false;
                         }
                     }
                 }
             }
         }
-        return false;
+        // if the current state is a final state, the word is accepted
+        return isFinalState(currentState);
     }
-
 }
