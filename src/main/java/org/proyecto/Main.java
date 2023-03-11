@@ -33,7 +33,6 @@ public class Main {
                 }
                 """;
 
-
         Lexer lexer = new Lexer(new StringReader(expr));
         Parser parser = new Parser(lexer);
         parser.parse();

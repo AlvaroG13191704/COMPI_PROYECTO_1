@@ -98,7 +98,6 @@ public class node {
                     this.first.addAll(((node) leftNode).first);
                     this.last.addAll(((node) leftNode).last);
                 }
-
             }
             default -> {
             }

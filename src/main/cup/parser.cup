@@ -49,8 +49,11 @@ start with ini;
 /* production rules */
 ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctly" ); :};
 
-body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body {:  :}
-        | CONJ COLON ID ARROW1 ARROW2 option_2 SEMICOLON body           {: :}
+body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body {:
+                                                                    //System.out.println("Nombre : " + name );
+                                                                    //System.out.println("Nombre : " + name );
+                                                                                        :}
+        | CONJ COLON ID:name ARROW1 ARROW2 option_2 SEMICOLON body           {: :}
         | ID:id ARROW1 ARROW2 re:var SEMICOLON body                        {:
                                                                     System.out.println("Reading a regular expresion " );
                                                                     identifiersName.add((String) id);
@@ -103,7 +106,6 @@ re ::= {:
                                     }
                                 :}
       ;
-
 
 option ::= LETTER
           |NUMBER

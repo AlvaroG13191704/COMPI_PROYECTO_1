@@ -250,7 +250,10 @@ class CUP$Parser$actions {
           case 2: // body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body 
             {
               Object RESULT =null;
-		  
+		
+                                                                    //System.out.println("Nombre : " + name );
+                                                                    //System.out.println("Nombre : " + name );
+                                                                                        
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("body",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -259,6 +262,9 @@ class CUP$Parser$actions {
           case 3: // body ::= CONJ COLON ID ARROW1 ARROW2 option_2 SEMICOLON body 
             {
               Object RESULT =null;
+		int nameleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
+		int nameright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).right;
+		Object name = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
 		 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("body",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
