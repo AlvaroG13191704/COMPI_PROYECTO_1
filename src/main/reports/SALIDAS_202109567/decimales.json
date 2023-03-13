@@ -1,0 +1,12 @@
+[ 
+{ 
+"Valor": "1505.55", 
+"Expresion Regular": "decimales",
+"Resultado": "Cadena Válida"
+},
+{ 
+"Valor": "301.59", 
+"Expresion Regular": "decimales",
+"Resultado": "Cadena No Válida"
+}
+]
