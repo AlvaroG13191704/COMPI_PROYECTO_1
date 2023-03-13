@@ -1,51 +1,41 @@
 package org.proyecto;
-
 import org.proyecto.Errors.LexicalError;
 import org.proyecto.codeAFD.AFDCode;
+import org.proyecto.codeAFD.objectJSON;
 import org.proyecto.treeMethod.*;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
         String expr = """
-                // #############  ESTE ES UN COMENTARIO DE UNA SOLA LINEA, POR LO QUE NO DEBE
-                //##############  DAR NINGUN PROBLEMA///////////////////---------
-                                
+                <!
+                     4R(H1V0 D3 PRU3B4 M3D10
+                !>
                 {
                                 
-                CONJ: numero - > 0,1,2,3,4, 5,6,7,   8, 9 ;
-                CONJ: minuscula -     > a ~  z ;
-                CONJ: mayuscula -> A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
-                CONJ: simbolos - > -,_;
+                //                       ----DEFINIENDO CONJUNTOS----
+                CONJ: mayus - > A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
+                CONJ: minus -     > a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z;
+                CONJ: letra -  > a~z;
+                CONJ: digito -  > 0~9;
                                 
-                //$%$%$%$%$%$%$%&/&/&/&/& ESTO NO DEBE DAR POBLEMA ============
-                                
-                correoElectronico -> .|{minuscula} {mayuscula} . + | | | {simbolos} {minuscula} {mayuscula} {numero} . "@" . + | {minuscula} {mayuscula} . ".". "c" . "o" "m";
-                url -> . "h". "t". "t". "p".?"s".":"."/"."/". + {minuscula} . "." + {minuscula};
-                                
+                //                       ----DEFINIENDO EXPRESIONES----
+                frase -> ."C"."O"."M"."P"."I"."1" ? + | | {letra} {digito} " ";
+                cadena  -   > . \\' . + | | | | \\n {minus} {mayus} {digito} " " \\';
                 %%
-                    %%
-                                
-                <!
-                                SECCIÓN DE PRUEBAS
-                                    #YASALIO
-                    !>
-                                
-                url : "https://facebook.com"; //correcto
-                url : "http://google.es"; //correcto
-                url : "https://compiladores-1.com"; //incorrecto
-                                
-                correoElectronico : "lachalana666@ingusac.com"; //correcto
-                correoElectronico : "micorreo_123@gMAIL.com"; //correcto
-                correoElectronico : "compiladores1.lab@hotMAIL.es"; //incorrecto
+                %%
+                cadena : "\\'cadena entre comilla simple\\'"; //bueno
+                frase : "COMPI1 sale con 100"; // bueno
                                 
                 }
+                                
+                <!
+                     12·$333544·%&//
+                          ·····NO TE DESANIMES ESTO SALE CON 100
+                     12·$333544·%&//
+                !>
                 """;
 
         Lexer lexer = new Lexer(new StringReader(expr));
@@ -92,6 +82,8 @@ public class Main {
         String[] regularExpressionArrayNew = Arrays.copyOfRange(regularExpressionArray, 1, regularExpressionArray.length);
         // iterate over the array
         for (int i = 0; i < regularExpressionArrayNew.length; i++) {
+            // Array of results
+            ArrayList<objectJSON> resultsJSON = new ArrayList<>();
             // get the name of the regular expresion
             String regularExpresionName = parser.identifiersName.get(i);
             // remove the first and last character
@@ -154,14 +146,44 @@ public class Main {
                         // evaluate the sentence
                         boolean result = afd.accept(val);
                         System.out.println("Result: " + result);
-                        // generate a json
+                        // create a json object
+                        if( result ) {
+                            objectJSON obj = new objectJSON(val,regularExpresionName, "Cadena Válida");
+                            resultsJSON.add(obj);
+                        }else {
+                            objectJSON obj = new objectJSON(val,regularExpresionName, "Cadena No Válida");
+                            resultsJSON.add(obj);
+                        }
                     }
+                    // GENERATE THE JSON FILE
+                    generateJSON(resultsJSON, regularExpresionName);
                 }
 
             }
         }
     }
 
+    public static void generateJSON(ArrayList<objectJSON> results, String name) {
+        String json = "[ \n";
+        for (objectJSON obj : results) {
+            json += "{ \n";
+            json += "\"Valor\": \"" + obj.getValue() + "\", \n";
+            json += "\"Expresion Regular\": \"" + obj.getNameRE() + "\",\n";
+            json += "\"Resultado\": \"" + obj.getResult() + "\"\n";
+            json += "},\n";
+        }
+        // remove the last character
+        json = json.substring(0, json.length() - 1);
+        json += "]\n";
+        json = json.replace(",]", "\n]");
+        // write the json file
+        try (FileWriter file = new FileWriter("src/main/reports/SALIDAS_202109567/" + name + ".json")) {
+            file.write(json);
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void generateHTMLErros(ArrayList<LexicalError> errors) throws IOException {
         FileWriter fichero = null;
         PrintWriter pw = null;
