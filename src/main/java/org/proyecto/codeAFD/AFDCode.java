@@ -10,6 +10,7 @@ public class AFDCode {
     private String initialState;
     private Set<String> finalStates;
 
+    private String setName;
     //Constructor
     public AFDCode(Set<String> states, Map<String, List<String>> alphabet, Map<String, List<Map<String, String>>> transitions, String initialState, Set<String> finalStates) {
         this.states = states;
@@ -17,6 +18,7 @@ public class AFDCode {
         this.transitions = transitions;
         this.initialState = initialState;
         this.finalStates = finalStates;
+        this.setName = "";
     }
 
 
@@ -25,6 +27,8 @@ public class AFDCode {
         for(Map.Entry<String, List<String>> entry : alphabet.entrySet()){
             // if the character is inside of the alphabet, return true
             if(entry.getValue().contains(character)){
+                // print the name of the key
+                setName = entry.getKey();
                 return true;
             }
         }
@@ -61,13 +65,20 @@ public class AFDCode {
                     } else {
                         // if the key array doesn't contains the current character, check if the key array contains the current character type
                         if(evaluateAlphabet(String.valueOf(c))){
-                            System.out.println("Current state: " + currentState + " with character: " + c + " is on the alphabet");
+                            // find the key that contains the current character type to change the current state
+                            if( setName != null && transition.containsKey(setName)) {
+                                currentState = transition.get(setName);
+                                System.out.println("Current state: " + currentState + " with character: " + c + " is on the alphabet: "  + setName);
+                                break;
+                            }
                         }else {
                             System.out.println("Current state: " + currentState + " with character: " + c + " is not on the alphabet");
                             return false;
                         }
                     }
+
                 }
+
             }
         }
         // if the current state is a final state, the word is accepted

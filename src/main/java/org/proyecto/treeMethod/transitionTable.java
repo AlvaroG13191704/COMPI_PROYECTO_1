@@ -6,12 +6,15 @@ import org.proyecto.treeMethod.node;
 import org.proyecto.treeMethod.transicion;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class transitionTable {
+
+    // Variables to manage the code of the AFD
+    public Set<String> statesAFD;
+    public Map<String, List<Map<String, String>>> transitionsAFD;
+    public String initialStateAFD;
+    public Set<String> finalStatesAFD;
 
     public ArrayList<ArrayList> states;
     public int cont;
@@ -20,8 +23,13 @@ public class transitionTable {
     public ArrayList<node> leaves;
 
     public transitionTable(node root, ArrayList tabla, ArrayList<node> leaves) {
-        this.states = new ArrayList(); // are the states of the AFD
+        // initialize the variables
+        this.statesAFD = new HashSet<>();
+        this.transitionsAFD = new HashMap<>();
+        this.finalStatesAFD = new HashSet<>();
+        this.initialStateAFD = "S0";
 
+        this.states = new ArrayList(); // are the states of the AFD
         ArrayList datos = new ArrayList(); // are the data of the states
         datos.add("S0");
         datos.add(root.first);
@@ -127,6 +135,13 @@ public class transitionTable {
         graphviz += "  </TR>\n";
 
         for(ArrayList state : states){
+            // add the state
+            statesAFD.add((String) state.get(0));
+            // add accept states
+            if((boolean) state.get(3)){
+                finalStatesAFD.add((String) state.get(0));
+            }
+
             graphviz += "  <TR>\n";
             graphviz += "  <TD border=\"1\">" + state.get(0) + " " + state.get(1) +  "</TD>\n";
             // create a string array of the size of leaves
@@ -138,15 +153,27 @@ public class transitionTable {
             ArrayList fourthPart = (ArrayList) state.get(4);
             for(int i = 0; i< leaves.size(); i++){
                 int finalI = i;
+
+                List<Map<String, String>> list = new ArrayList<>();
+                Map<String, String> map = new HashMap<>();
+
                 fourthPart.forEach((item) -> {
                     String value = item.toString().replace("[", "").replace("]", "");
                     String[] values = value.split(",");
+
+                    map.put(values[0].replace("\"",""), values[1].replace(" ",""));
+
                     if(values[0].equals(leaves.get(finalI).lexeme)){
+
+
+                        //System.out.println("state : " + state.get(0) + " lexeme : " + values[0] + " value : " + values[1]);
                         tdValues[finalI] = "<TD border=\"1\">" + values[1] + "</TD>";
                     }
-                });
-            }
 
+                });
+                list.add(map);
+                transitionsAFD.put((String) state.get(0), list);
+            }
 
             for(String td : tdValues){
                 graphviz += "  " + td + "\n";

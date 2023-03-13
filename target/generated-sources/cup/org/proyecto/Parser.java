@@ -5,11 +5,10 @@
 
 package org.proyecto;
 
-import java_cup.runtime.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.*;
 import org.proyecto.Errors.LexicalError;
+import java_cup.runtime.*;
+import java.util.*;
+import java.io.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -181,6 +180,10 @@ public class Parser extends java_cup.runtime.lr_parser {
     ArrayList<String> results = new ArrayList<String>();
     ArrayList<String> regex = new ArrayList<String>();
     ArrayList<String> identifiersName = new ArrayList<String>();
+    // ArrayList to store a map of sets
+    ArrayList<String> alphabet_1 = new ArrayList<String>();
+    ArrayList<String> alphabet_2 = new ArrayList<String>();
+
     // List of errors
     List<LexicalError> errors = new ArrayList();
     // Method to add errors
@@ -250,9 +253,20 @@ class CUP$Parser$actions {
           case 2: // body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body 
             {
               Object RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-7)).value;
+		int varlleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int varlright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object varl = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int varrleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int varrright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object varr = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-                                                                    //System.out.println("Nombre : " + name );
-                                                                    //System.out.println("Nombre : " + name );
+
+                            //System.out.println("Nombre : " + id + " " + varl + "~" + varr);
+                            alphabet_1.add( id + "~" + varl + "~" + varr);
+                            System.out.println("Alphabet_1: " + alphabet_1);
                                                                                         
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("body",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -262,10 +276,18 @@ class CUP$Parser$actions {
           case 3: // body ::= CONJ COLON ID ARROW1 ARROW2 option_2 SEMICOLON body 
             {
               Object RESULT =null;
-		int nameleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
-		int nameright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).right;
-		Object name = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
-		 
+		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
+		int varcleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int varcright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object varc = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+                            //System.out.println("Nombre : " + id + " " + varc);
+                            // replace the last coma with ""
+                            alphabet_2.add( id + "~" + varc.toString().replace("null","").replace(",",""));
+                            System.out.println("Alphabet_2: " + alphabet_2);
+                                                                              
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("body",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -509,7 +531,10 @@ class CUP$Parser$actions {
           case 19: // option ::= LETTER 
             {
               Object RESULT =null;
-
+		int oleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object o = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		RESULT = (String) o; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("option",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -518,7 +543,10 @@ class CUP$Parser$actions {
           case 20: // option ::= NUMBER 
             {
               Object RESULT =null;
-
+		int oleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object o = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		  RESULT = (String) o; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("option",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -527,7 +555,10 @@ class CUP$Parser$actions {
           case 21: // option ::= SPECIAL 
             {
               Object RESULT =null;
-
+		int oleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object o = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = (String) o; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("option",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -536,7 +567,16 @@ class CUP$Parser$actions {
           case 22: // option_2 ::= LETTER COMMA option_2 
             {
               Object RESULT =null;
-
+		int oleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object o = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int onleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int onright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object on = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT =  o + (String) c +  on; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("option_2",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -545,7 +585,16 @@ class CUP$Parser$actions {
           case 23: // option_2 ::= NUMBER COMMA option_2 
             {
               Object RESULT =null;
-
+		int oleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object o = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int onleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int onright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object on = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT =  o + (String) c +  on; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("option_2",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -554,7 +603,16 @@ class CUP$Parser$actions {
           case 24: // option_2 ::= SPECIAL COMMA option_2 
             {
               Object RESULT =null;
-
+		int oleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object o = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int onleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int onright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object on = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT =  o + (String) c +  on; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("option_2",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

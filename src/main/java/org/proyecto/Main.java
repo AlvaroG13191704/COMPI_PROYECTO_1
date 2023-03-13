@@ -1,6 +1,7 @@
 package org.proyecto;
 
 import org.proyecto.Errors.LexicalError;
+import org.proyecto.codeAFD.AFDCode;
 import org.proyecto.treeMethod.*;
 
 import java.io.FileWriter;
@@ -13,23 +14,37 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         String expr = """
+                // #############  ESTE ES UN COMENTARIO DE UNA SOLA LINEA, POR LO QUE NO DEBE
+                //##############  DAR NINGUN PROBLEMA///////////////////---------
+                                
                 {
-
-                //                       ----DEFINIENDO CONJUNTOS----
-                CONJ: mayus - > A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
-                CONJ: minus -     > a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z;
-                CONJ: letra -  > a~z;
-                CONJ: digito -  > 0~9;
-
-                //                       ----DEFINIENDO EXPRESIONES----
-                frase -> ."C"."O"."M"."P"."I"."1" ? + | | {letra} {digito} " ";
-                //cadena  -> . \\' . + | | | |  \\n {minus} {mayus} {digito} " " \\';
-                //kevinExp -> . . |{letra} "2" * {nums}  . | * |{separados} {mayus} "x" {separados};
+                                
+                CONJ: numero - > 0,1,2,3,4, 5,6,7,   8, 9 ;
+                CONJ: minuscula -     > a ~  z ;
+                CONJ: mayuscula -> A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
+                CONJ: simbolos - > -,_;
+                                
+                //$%$%$%$%$%$%$%&/&/&/&/& ESTO NO DEBE DAR POBLEMA ============
+                                
+                correoElectronico -> .|{minuscula} {mayuscula} . + | | | {simbolos} {minuscula} {mayuscula} {numero} . "@" . + | {minuscula} {mayuscula} . ".". "c" . "o" "m";
+                //url -> . "h". "t". "t". "p".?"s".":"."/"."/". + {minuscula} . "." + {minuscula};
+                                
                 %%
-                %%
-                cadena : "\\'cadena entre comilla simple\\'"; //bueno
-                frase : "COMPI1 sale con 100"; // bueno
-
+                    %%
+                                
+                <!
+                                SECCIÓN DE PRUEBAS
+                                    #YASALIO
+                    !>
+                                
+                url : "https://facebook.com"; //correcto
+                url : "http://google.es"; //correcto
+                url : "https://compiladores-1.com"; //incorrecto
+                                
+                correoElectronico : "lachalana666@ingusac.com"; //correcto
+                correoElectronico : "micorreo_123@gMAIL.com"; //correcto
+                correoElectronico : "compiladores1.lab@hotMAIL.es"; //incorrecto
+                                
                 }
                 """;
 
@@ -42,6 +57,32 @@ public class Main {
         errors.addAll(errorsLexer);
         errors.addAll(parser.getErrors());
         generateHTMLErros(errors);
+        // GENERATE THE GLOBAL ALPHABET
+        Map<String, List<String>> globalAlphabet = new HashMap<>();
+        for(String alphabet : parser.alphabet_1){ // First alphabet with the format a ~ z
+            List<String> rangeList = new ArrayList<String>(); // create a list
+            String[] range = alphabet.split("~"); // split the string by ~
+            System.out.println(range[0] + " " + range[1] + " " + range[2]);
+            // iterate over the range
+            for (int i = (int) range[1].charAt(0); i <= (int) range[2].charAt(0); i++) {
+                char c = (char) i;
+                rangeList.add(Character.toString(c));
+            }
+            globalAlphabet.put(range[0],  rangeList);
+        }
+        for(String alphabet : parser.alphabet_2){ // Second alphabet with the format a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+            List<String> rangeList = new ArrayList<String>(); // create a list
+            String[] range = alphabet.split("~"); // split the string by ~
+            System.out.println(range[0] + " " + range[1] );
+            // iterate over the range
+            for (int i = 0; i < range[1].length(); i++) {
+                rangeList.add(Character.toString(range[1].charAt(i)));
+            }
+            globalAlphabet.put(range[0],  rangeList);
+        }
+        System.out.println(globalAlphabet);
+        // GENERATE THE GLOBAL ALPHABET
+
         // reverse the arraylist
         Collections.reverse(parser.identifiersName);
         String regularExpression = parser.results.get(0);
@@ -82,10 +123,29 @@ public class Main {
             followTable ft = new followTable();
             ft.printTable(table,regularExpresionName);
             System.out.println("=============================TABLA TRANSICIONES=============================");
+            // create a new alphabet with words that are inside of leaves
+            Map<String, List<String>> alphabet = new HashMap<>();
+            for (node alp : leaves) {
+                // elimante the elements inside of globalAlphabet
+                if( globalAlphabet.containsKey(alp.lexeme)){
+                    List<String> list = globalAlphabet.get(alp.lexeme);
+                    alphabet.put(alp.lexeme, list);
+                }
+            }
             transitionTable tran = new transitionTable(raiz, table, leaves);
             tran.impTable(regularExpresionName);
-            System.out.println("============================= GRAPHVIZ===============================================");
+            System.out.println("States -> " + tran.statesAFD);
+            System.out.println("Alphabet -> " + alphabet );
+            System.out.println("Transitions -> " + tran.transitionsAFD);
+            System.out.println("Initial State -> " + tran.initialStateAFD);
+            System.out.println("Accept States ->"+ tran.finalStatesAFD);
+            System.out.println("============================= GRAPHVIZ AFD===============================================");
             tran.impGraph(regularExpresionName);
+            System.out.println("============================= EVALUATE AFD ===============================================");
+            // CREATE THE AFD
+            AFDCode afd = new AFDCode(tran.statesAFD, alphabet, tran.transitionsAFD, tran.initialStateAFD, tran.finalStatesAFD);
+            boolean result = afd.accept("lachalana666@ingusac.com");
+            System.out.println("Result: " + result);
         }
     }
 

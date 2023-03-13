@@ -1,9 +1,8 @@
 package org.proyecto;
-import java_cup.runtime.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.*;
 import org.proyecto.Errors.LexicalError;
+import java_cup.runtime.*;
+import java.util.*;
+import java.io.*;
 
 /* 2. Codigo para el parser, variables, metodos */
 class Parser;
@@ -16,6 +15,10 @@ parser code
     ArrayList<String> results = new ArrayList<String>();
     ArrayList<String> regex = new ArrayList<String>();
     ArrayList<String> identifiersName = new ArrayList<String>();
+    // ArrayList to store a map of sets
+    ArrayList<String> alphabet_1 = new ArrayList<String>();
+    ArrayList<String> alphabet_2 = new ArrayList<String>();
+
     // List of errors
     List<LexicalError> errors = new ArrayList();
     // Method to add errors
@@ -49,11 +52,18 @@ start with ini;
 /* production rules */
 ini ::= LBRACE body RBRACE  {: System.out.println("The file was written correctly" ); :};
 
-body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body {:
-                                                                    //System.out.println("Nombre : " + name );
-                                                                    //System.out.println("Nombre : " + name );
+body ::= CONJ COLON ID:id ARROW1 ARROW2 option:varl TILDE option:varr SEMICOLON body {:
+
+                            //System.out.println("Nombre : " + id + " " + varl + "~" + varr);
+                            alphabet_1.add( id + "~" + varl + "~" + varr);
+                            System.out.println("Alphabet_1: " + alphabet_1);
                                                                                         :}
-        | CONJ COLON ID:name ARROW1 ARROW2 option_2 SEMICOLON body           {: :}
+        | CONJ COLON ID:id ARROW1 ARROW2 option_2:varc SEMICOLON body           {:
+                            //System.out.println("Nombre : " + id + " " + varc);
+                            // replace the last coma with ""
+                            alphabet_2.add( id + "~" + varc.toString().replace("null","").replace(",",""));
+                            System.out.println("Alphabet_2: " + alphabet_2);
+                                                                              :}
         | ID:id ARROW1 ARROW2 re:var SEMICOLON body                        {:
                                                                     System.out.println("Reading a regular expresion " );
                                                                     identifiersName.add((String) id);
@@ -107,13 +117,13 @@ re ::= {:
                                 :}
       ;
 
-option ::= LETTER
-          |NUMBER
-          |SPECIAL
+option ::= LETTER:o   {:RESULT = (String) o; :}
+          |NUMBER:o  {:  RESULT = (String) o; :}
+          |SPECIAL:o {: RESULT = (String) o; :}
           ;
 
-option_2 ::= LETTER  COMMA option_2
-            |NUMBER  COMMA option_2
-            |SPECIAL COMMA option_2
+option_2 ::= LETTER:o  COMMA:c option_2:on {: RESULT =  o + (String) c +  on; :}
+            |NUMBER:o  COMMA:c option_2:on {: RESULT =  o + (String) c +  on; :}
+            |SPECIAL:o COMMA:c option_2:on {: RESULT =  o + (String) c +  on; :}
             |option
             ;
