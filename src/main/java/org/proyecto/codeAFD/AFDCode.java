@@ -53,6 +53,17 @@ public class AFDCode {
                         System.out.println("Current state: " + currentState + " with character: " + c + " has a one element transition");
                         break;
                     }else {
+                        // Evaluate if that character is on the alphabet
+                        if(evaluateAlphabet(String.valueOf(c))){
+                            // find the key that contains the current character type to change the current state
+                            if( setName != null && transition.containsKey(setName)) {
+                                currentState = transition.get(setName);
+                                System.out.println("Current state: " + currentState + " with character: " + c + " is on the alphabet: "  + setName);
+                                break;
+                            }else {
+
+                            }
+                        }
                         System.out.println("Current state: " + currentState + " with character: " + c + " has a one element transition but doesn't match");
                         return false;
                     }

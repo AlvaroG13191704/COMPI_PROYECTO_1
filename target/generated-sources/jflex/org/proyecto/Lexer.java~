@@ -326,8 +326,8 @@ public class Lexer implements java_cup.runtime.Scanner {
 
     // function
     public void emit_error(LexicalError error) {
-        errors.add(error);
         System.err.println("Error: Line " + error.getLine() + ", Column " + error.getColumn() + ": " + error.getLexema());
+        errors.add(error);
     }
 
 

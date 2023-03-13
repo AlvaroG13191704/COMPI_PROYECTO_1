@@ -27,7 +27,7 @@ public class Main {
                 //$%$%$%$%$%$%$%&/&/&/&/& ESTO NO DEBE DAR POBLEMA ============
                                 
                 correoElectronico -> .|{minuscula} {mayuscula} . + | | | {simbolos} {minuscula} {mayuscula} {numero} . "@" . + | {minuscula} {mayuscula} . ".". "c" . "o" "m";
-                //url -> . "h". "t". "t". "p".?"s".":"."/"."/". + {minuscula} . "." + {minuscula};
+                url -> . "h". "t". "t". "p".?"s".":"."/"."/". + {minuscula} . "." + {minuscula};
                                 
                 %%
                     %%
@@ -144,8 +144,21 @@ public class Main {
             System.out.println("============================= EVALUATE AFD ===============================================");
             // CREATE THE AFD
             AFDCode afd = new AFDCode(tran.statesAFD, alphabet, tran.transitionsAFD, tran.initialStateAFD, tran.finalStatesAFD);
-            boolean result = afd.accept("lachalana666@ingusac.com");
-            System.out.println("Result: " + result);
+            // EVALUATE THE EACH SENTENCE inside the map with values in an array
+            for (String sentence : parser.StringsToEvaluate.keySet()) {
+                // get the value inside the map
+                if(sentence.equals(regularExpresionName)){
+                    String[] values = parser.StringsToEvaluate.get(sentence).toArray(new String[0]);
+                    // iterate over the array
+                    for(String val: values) {
+                        // evaluate the sentence
+                        boolean result = afd.accept(val);
+                        System.out.println("Result: " + result);
+                        // generate a json
+                    }
+                }
+
+            }
         }
     }
 

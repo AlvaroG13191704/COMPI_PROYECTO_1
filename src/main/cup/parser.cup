@@ -15,10 +15,11 @@ parser code
     ArrayList<String> results = new ArrayList<String>();
     ArrayList<String> regex = new ArrayList<String>();
     ArrayList<String> identifiersName = new ArrayList<String>();
-    // ArrayList to store a map of sets
+    // ArrayList to store the alphabet
     ArrayList<String> alphabet_1 = new ArrayList<String>();
     ArrayList<String> alphabet_2 = new ArrayList<String>();
-
+    // A map of ArrayLists to store the string value
+    Map<String, ArrayList<String>> StringsToEvaluate = new HashMap<String, ArrayList<String>>();
     // List of errors
     List<LexicalError> errors = new ArrayList();
     // Method to add errors
@@ -40,7 +41,7 @@ parser code
 
 /* Terminals */
 terminal  LBRACE, RBRACE, CONJ, ID, ARROW1, ARROW2, SEMICOLON, COLON, TILDE, SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT;
-terminal SIMB1, SIMB2, SIMB3;
+terminal SIMB1, SIMB2, SIMB3,UNDERSCORE;
 /* Non terminal */
 non terminal ini;
 non terminal body;
@@ -59,7 +60,7 @@ body ::= CONJ COLON ID:id ARROW1 ARROW2 option:varl TILDE option:varr SEMICOLON 
                             System.out.println("Alphabet_1: " + alphabet_1);
                                                                                         :}
         | CONJ COLON ID:id ARROW1 ARROW2 option_2:varc SEMICOLON body           {:
-                            //System.out.println("Nombre : " + id + " " + varc);
+                            System.out.println("Nombre : " + id + " " + varc);
                             // replace the last coma with ""
                             alphabet_2.add( id + "~" + varc.toString().replace("null","").replace(",",""));
                             System.out.println("Alphabet_2: " + alphabet_2);
@@ -70,7 +71,17 @@ body ::= CONJ COLON ID:id ARROW1 ARROW2 option:varl TILDE option:varr SEMICOLON 
                                                                     results.add(regex.toString());
                                                                  :}
         | PERCENT  body                                         {:  :}
-        | ID COLON STRING SEMICOLON body                        {:  :}
+        | ID:id COLON STRING:var SEMICOLON body                        {:
+            if(StringsToEvaluate.containsKey((String) id)){
+                ArrayList<String> aux = StringsToEvaluate.get(id);
+                aux.add( (String) var);
+                StringsToEvaluate.put( (String) id, aux);
+            }else{
+                ArrayList<String> aux = new ArrayList<String>();
+                aux.add((String) var);
+                StringsToEvaluate.put((String) id, aux);
+            }
+         :}
         | /* empty */
         ;
 
@@ -125,5 +136,6 @@ option ::= LETTER:o   {:RESULT = (String) o; :}
 option_2 ::= LETTER:o  COMMA:c option_2:on {: RESULT =  o + (String) c +  on; :}
             |NUMBER:o  COMMA:c option_2:on {: RESULT =  o + (String) c +  on; :}
             |SPECIAL:o COMMA:c option_2:on {: RESULT =  o + (String) c +  on; :}
-            |option
+            |UNDERSCORE:o COMMA:c option_2:on {: RESULT =  o + (String) c +  on; :}
+            |option:o  {: RESULT =  o ; :}
             ;
