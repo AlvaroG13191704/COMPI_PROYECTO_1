@@ -43,11 +43,19 @@ public class app extends javax.swing.JFrame {
         nameFile = new javax.swing.JLabel();
         genAFD = new javax.swing.JButton();
         consoleLabel = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        codeArea = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         consoleArea = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        codeArea = new javax.swing.JTextArea();
+        panelImages = new javax.swing.JTabbedPane();
+        TreesPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listTree = new javax.swing.JList<>();
+        showTreeImage = new javax.swing.JButton();
+        treeImage = new javax.swing.JLabel();
+        FollowTablePanel = new javax.swing.JPanel();
+        TransitionsTablePanel = new javax.swing.JPanel();
+        AFDPanel = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -56,8 +64,10 @@ public class app extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        nameFile.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 14)); // NOI18N
         nameFile.setText("Archivo: ");
 
+        genAFD.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
         genAFD.setText("Generar Autómata y Analizar Entrada");
         genAFD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,23 +75,105 @@ public class app extends javax.swing.JFrame {
             }
         });
 
+        consoleLabel.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
         consoleLabel.setText("Consola:");
 
-        codeArea.setColumns(20);
-        codeArea.setRows(5);
-        jScrollPane1.setViewportView(codeArea);
-
-        jScrollPane2.setViewportView(jScrollPane1);
-
         consoleArea.setColumns(20);
+        consoleArea.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
         consoleArea.setRows(5);
         consoleArea.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         consoleArea.disable();
         jScrollPane3.setViewportView(consoleArea);
 
+        codeArea.setColumns(20);
+        codeArea.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
+        codeArea.setRows(5);
+        jScrollPane1.setViewportView(codeArea);
+
+        listTree.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 12)); // NOI18N
+        jScrollPane2.setViewportView(listTree);
+
+        showTreeImage.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
+        showTreeImage.setText("VER IMAGEN");
+        showTreeImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showTreeImageActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout TreesPanelLayout = new javax.swing.GroupLayout(TreesPanel);
+        TreesPanel.setLayout(TreesPanelLayout);
+        TreesPanelLayout.setHorizontalGroup(
+            TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TreesPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TreesPanelLayout.createSequentialGroup()
+                        .addComponent(showTreeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(673, Short.MAX_VALUE))
+                    .addGroup(TreesPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(treeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        TreesPanelLayout.setVerticalGroup(
+            TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TreesPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(treeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(showTreeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelImages.addTab("ÁRBOLES", TreesPanel);
+
+        javax.swing.GroupLayout FollowTablePanelLayout = new javax.swing.GroupLayout(FollowTablePanel);
+        FollowTablePanel.setLayout(FollowTablePanelLayout);
+        FollowTablePanelLayout.setHorizontalGroup(
+            FollowTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 876, Short.MAX_VALUE)
+        );
+        FollowTablePanelLayout.setVerticalGroup(
+            FollowTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 533, Short.MAX_VALUE)
+        );
+
+        panelImages.addTab("SIGUIENTES", FollowTablePanel);
+
+        javax.swing.GroupLayout TransitionsTablePanelLayout = new javax.swing.GroupLayout(TransitionsTablePanel);
+        TransitionsTablePanel.setLayout(TransitionsTablePanelLayout);
+        TransitionsTablePanelLayout.setHorizontalGroup(
+            TransitionsTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 876, Short.MAX_VALUE)
+        );
+        TransitionsTablePanelLayout.setVerticalGroup(
+            TransitionsTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 533, Short.MAX_VALUE)
+        );
+
+        panelImages.addTab("TRANSICIONES", TransitionsTablePanel);
+
+        javax.swing.GroupLayout AFDPanelLayout = new javax.swing.GroupLayout(AFDPanel);
+        AFDPanel.setLayout(AFDPanelLayout);
+        AFDPanelLayout.setHorizontalGroup(
+            AFDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 876, Short.MAX_VALUE)
+        );
+        AFDPanelLayout.setVerticalGroup(
+            AFDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 533, Short.MAX_VALUE)
+        );
+
+        panelImages.addTab("AUTÓMATAS", AFDPanel);
+
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
+        fileMenu.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 12)); // NOI18N
 
+        openMenuItem.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 12)); // NOI18N
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Abrir");
         openMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -91,10 +183,12 @@ public class app extends javax.swing.JFrame {
         });
         fileMenu.add(openMenuItem);
 
+        saveMenuItem.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 12)); // NOI18N
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Guardar");
         fileMenu.add(saveMenuItem);
 
+        saveAsMenuItem.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 12)); // NOI18N
         saveAsMenuItem.setMnemonic('a');
         saveAsMenuItem.setText("Guardar como...");
         fileMenu.add(saveAsMenuItem);
@@ -110,30 +204,36 @@ public class app extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(consoleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(genAFD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
-                        .addGap(0, 643, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(genAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(panelImages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 6, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(genAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelImages, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(genAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(consoleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -255,16 +355,18 @@ public class app extends javax.swing.JFrame {
         }
         // reverse the arraylist
         Collections.reverse(parser.identifiersName);
+      
         String regularExpression = parser.results.get(0);
         // split the regular expression by NEXT
         String[] regularExpressionArray = regularExpression.split("NEXT");
         // remove the first element
         String[] regularExpressionArrayNew = Arrays.copyOfRange(regularExpressionArray, 1, regularExpressionArray.length);
         // iterate over the array
+        String printConsole = "";
         for (int i = 0; i < regularExpressionArrayNew.length; i++) {
             // Array of results
             ArrayList<objectJSON> resultsJSON = new ArrayList<>();
-            String printConsole = "";
+            
             // get the name of the regular expresion
             String regularExpresionName = parser.identifiersName.get(i);
             // remove the first and last character
@@ -332,25 +434,45 @@ public class app extends javax.swing.JFrame {
                         if( result ) {
                             objectJSON obj = new objectJSON(val,regularExpresionName, "Cadena Válida");
                             
-                            printConsole += "La expresión: " + val + "Es válida con la expresión Regular -> " + regularExpresionName + "\n";
+                            printConsole += "La expresión: " + val + " Es válida con la expresión Regular -> " + regularExpresionName + "\n";
                             resultsJSON.add(obj);
                         }else {
                             objectJSON obj = new objectJSON(val,regularExpresionName, "Cadena No Válida");
-                            printConsole += "La expresión: " + val + "No es válida con la expresión Regular -> " + regularExpresionName + "\n";
+                            printConsole += "La expresión: " + val + " No es válida con la expresión Regular -> " + regularExpresionName + "\n";
                             resultsJSON.add(obj);
                         }
                     }
                     // GENERATE THE JSON FILE
                     generateJSON(resultsJSON, regularExpresionName);
-                    // SHOW IN THE TEXTAREA (CONSOLE)
-                    consoleArea.setText(printConsole);
                 }
             }
         }
         // SHOW MESSAGE OF GOD
         JOptionPane.showMessageDialog(null, "Proceso Terminado");
+        // SHOW IN THE TEXTAREA (CONSOLE)
+        consoleArea.setText(printConsole);
+        // ADD TO THE LIST SWIG THE NAME OF THE regular expresions
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(String str: parser.identifiersName){
+            model.addElement(str);
+        }
+        listTree.setModel(model);
 
     }//GEN-LAST:event_genAFDActionPerformed
+
+    private void showTreeImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showTreeImageActionPerformed
+        // TODO add your handling code here:
+        String optionSelected = listTree.getSelectedValue();
+        
+        String path = "\\src\\main\\reports\\ARBOLES_202109567\\" + optionSelected + ".png";
+        System.out.println(optionSelected);
+        System.out.println(path);
+        Icon imageTreeIcon = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage()
+                .getScaledInstance(treeImage.getWidth(), treeImage.getHeight(), 0));
+        
+        // Set image
+        treeImage.setIcon(imageTreeIcon);
+    }//GEN-LAST:event_showTreeImageActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,6 +511,10 @@ public class app extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AFDPanel;
+    private javax.swing.JPanel FollowTablePanel;
+    private javax.swing.JPanel TransitionsTablePanel;
+    private javax.swing.JPanel TreesPanel;
     private javax.swing.JTextArea codeArea;
     private javax.swing.JTextArea consoleArea;
     private javax.swing.JLabel consoleLabel;
@@ -397,11 +523,15 @@ public class app extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> listTree;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nameFile;
     private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JTabbedPane panelImages;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JButton showTreeImage;
+    private javax.swing.JLabel treeImage;
     // End of variables declaration//GEN-END:variables
     
     public static void generateJSON(ArrayList<objectJSON> results, String name) {
