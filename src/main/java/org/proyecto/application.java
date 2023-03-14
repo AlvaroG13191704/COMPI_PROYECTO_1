@@ -3,6 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/Application.java to edit this template
  */
 package org.proyecto;
+
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import org.proyecto.Errors.LexicalError;
 import org.proyecto.codeAFD.AFDCode;
 import org.proyecto.codeAFD.objectJSON;
@@ -11,23 +23,16 @@ import org.proyecto.treeMethod.followTable;
 import org.proyecto.treeMethod.node;
 import org.proyecto.treeMethod.transitionTable;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Beto
  */
-public class app extends javax.swing.JFrame {
+public class application extends javax.swing.JFrame {
 
     /**
-     * Creates new form app
+     * Creates new form application
      */
-    public app() {
+    public application() {
         initComponents();
     }
 
@@ -41,21 +46,33 @@ public class app extends javax.swing.JFrame {
     private void initComponents() {
 
         nameFile = new javax.swing.JLabel();
-        genAFD = new javax.swing.JButton();
-        consoleLabel = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        consoleArea = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         codeArea = new javax.swing.JTextArea();
-        panelImages = new javax.swing.JTabbedPane();
-        TreesPanel = new javax.swing.JPanel();
+        generateAnalyze = new java.awt.Button();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        listTree = new javax.swing.JList<>();
-        showTreeImage = new javax.swing.JButton();
+        consoleArea = new javax.swing.JTextArea();
+        reportPanel = new javax.swing.JTabbedPane();
+        TreesPanel = new javax.swing.JPanel();
         treeImage = new javax.swing.JLabel();
-        FollowTablePanel = new javax.swing.JPanel();
-        TransitionsTablePanel = new javax.swing.JPanel();
-        AFDPanel = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        listTree = new javax.swing.JList<>();
+        showTreeImage = new java.awt.Button();
+        FollowPanel = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listFollow = new javax.swing.JList<>();
+        showFollowImage = new java.awt.Button();
+        followImage = new javax.swing.JLabel();
+        TransitionPanel = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        listTrans = new javax.swing.JList<>();
+        showTransImage = new java.awt.Button();
+        TransImage = new javax.swing.JLabel();
+        AutomatasPanel = new javax.swing.JPanel();
+        AutomaImage = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        listAutoma = new javax.swing.JList<>();
+        showAutoImage = new java.awt.Button();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -64,120 +81,170 @@ public class app extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        nameFile.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 14)); // NOI18N
         nameFile.setText("Archivo: ");
 
-        genAFD.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
-        genAFD.setText("Generar Autómata y Analizar Entrada");
-        genAFD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genAFDActionPerformed(evt);
-            }
-        });
-
-        consoleLabel.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
-        consoleLabel.setText("Consola:");
-
-        consoleArea.setColumns(20);
-        consoleArea.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
-        consoleArea.setRows(5);
-        consoleArea.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        consoleArea.disable();
-        jScrollPane3.setViewportView(consoleArea);
-
         codeArea.setColumns(20);
-        codeArea.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
         codeArea.setRows(5);
         jScrollPane1.setViewportView(codeArea);
 
-        listTree.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 12)); // NOI18N
-        jScrollPane2.setViewportView(listTree);
+        generateAnalyze.setLabel("Generar Autómata y Analizar Entrada");
+        generateAnalyze.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateAnalyzeActionPerformed(evt);
+            }
+        });
 
-        showTreeImage.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 14)); // NOI18N
-        showTreeImage.setText("VER IMAGEN");
+        jLabel1.setText("Consola:");
+
+        consoleArea.setColumns(20);
+        consoleArea.disable();
+        consoleArea.setRows(5);
+        consoleArea.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jScrollPane2.setViewportView(consoleArea);
+
+        jScrollPane7.setViewportView(listTree);
+
+        showTreeImage.setLabel("Mostrar Imagen");
         showTreeImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showTreeImageActionPerformed(evt);
             }
         });
 
-        treeImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/proyecto/url.png"))); // NOI18N
-
         javax.swing.GroupLayout TreesPanelLayout = new javax.swing.GroupLayout(TreesPanel);
         TreesPanel.setLayout(TreesPanelLayout);
         TreesPanelLayout.setHorizontalGroup(
             TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TreesPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TreesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(TreesPanelLayout.createSequentialGroup()
-                        .addComponent(showTreeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(TreesPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(treeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(showTreeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(treeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         TreesPanelLayout.setVerticalGroup(
             TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TreesPanelLayout.createSequentialGroup()
-                .addGroup(TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(TreesPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(treeImage))
-                .addGap(18, 18, 18)
-                .addComponent(showTreeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(showTreeImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+            .addGroup(TreesPanelLayout.createSequentialGroup()
+                .addComponent(treeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        panelImages.addTab("ÁRBOLES", TreesPanel);
+        reportPanel.addTab("ÁRBOLES", TreesPanel);
 
-        javax.swing.GroupLayout FollowTablePanelLayout = new javax.swing.GroupLayout(FollowTablePanel);
-        FollowTablePanel.setLayout(FollowTablePanelLayout);
-        FollowTablePanelLayout.setHorizontalGroup(
-            FollowTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1074, Short.MAX_VALUE)
-        );
-        FollowTablePanelLayout.setVerticalGroup(
-            FollowTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
-        );
+        jScrollPane4.setViewportView(listFollow);
 
-        panelImages.addTab("SIGUIENTES", FollowTablePanel);
+        showFollowImage.setLabel("Mostrar Imagen");
+        showFollowImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showFollowImageActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout TransitionsTablePanelLayout = new javax.swing.GroupLayout(TransitionsTablePanel);
-        TransitionsTablePanel.setLayout(TransitionsTablePanelLayout);
-        TransitionsTablePanelLayout.setHorizontalGroup(
-            TransitionsTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1074, Short.MAX_VALUE)
+        javax.swing.GroupLayout FollowPanelLayout = new javax.swing.GroupLayout(FollowPanel);
+        FollowPanel.setLayout(FollowPanelLayout);
+        FollowPanelLayout.setHorizontalGroup(
+            FollowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FollowPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(FollowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(showFollowImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(followImage, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        TransitionsTablePanelLayout.setVerticalGroup(
-            TransitionsTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
-        );
-
-        panelImages.addTab("TRANSICIONES", TransitionsTablePanel);
-
-        javax.swing.GroupLayout AFDPanelLayout = new javax.swing.GroupLayout(AFDPanel);
-        AFDPanel.setLayout(AFDPanelLayout);
-        AFDPanelLayout.setHorizontalGroup(
-            AFDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1074, Short.MAX_VALUE)
-        );
-        AFDPanelLayout.setVerticalGroup(
-            AFDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+        FollowPanelLayout.setVerticalGroup(
+            FollowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FollowPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(showFollowImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+            .addGroup(FollowPanelLayout.createSequentialGroup()
+                .addComponent(followImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        panelImages.addTab("AUTÓMATAS", AFDPanel);
+        reportPanel.addTab("SIGUIENTES", FollowPanel);
+
+        jScrollPane5.setViewportView(listTrans);
+
+        showTransImage.setLabel("Mostrar Imagen");
+        showTransImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showTransImageActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout TransitionPanelLayout = new javax.swing.GroupLayout(TransitionPanel);
+        TransitionPanel.setLayout(TransitionPanelLayout);
+        TransitionPanelLayout.setHorizontalGroup(
+            TransitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TransitionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(TransitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(showTransImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TransImage, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        TransitionPanelLayout.setVerticalGroup(
+            TransitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TransitionPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(showTransImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+            .addGroup(TransitionPanelLayout.createSequentialGroup()
+                .addComponent(TransImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        reportPanel.addTab("TRANSICIONES", TransitionPanel);
+
+        jScrollPane6.setViewportView(listAutoma);
+
+        showAutoImage.setLabel("Mostrar Imagen");
+        showAutoImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showAutoImageActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout AutomatasPanelLayout = new javax.swing.GroupLayout(AutomatasPanel);
+        AutomatasPanel.setLayout(AutomatasPanelLayout);
+        AutomatasPanelLayout.setHorizontalGroup(
+            AutomatasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AutomatasPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AutomatasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(showAutoImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AutomaImage, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        AutomatasPanelLayout.setVerticalGroup(
+            AutomatasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AutomatasPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(showAutoImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+            .addGroup(AutomatasPanelLayout.createSequentialGroup()
+                .addComponent(AutomaImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        reportPanel.addTab("AUTÓMATAS", AutomatasPanel);
 
         fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
-        fileMenu.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 12)); // NOI18N
+        fileMenu.setText("ARCHIVO");
 
-        openMenuItem.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 12)); // NOI18N
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Abrir");
         openMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -187,14 +254,12 @@ public class app extends javax.swing.JFrame {
         });
         fileMenu.add(openMenuItem);
 
-        saveMenuItem.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 12)); // NOI18N
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Guardar");
         fileMenu.add(saveMenuItem);
 
-        saveAsMenuItem.setFont(new java.awt.Font("JetBrains Mono SemiBold", 0, 12)); // NOI18N
         saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Guardar como...");
+        saveAsMenuItem.setText("Guardar Como...");
         fileMenu.add(saveAsMenuItem);
 
         menuBar.add(fileMenu);
@@ -208,35 +273,38 @@ public class app extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(consoleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(genAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panelImages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jScrollPane3)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(generateAnalyze, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                                    .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(reportPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 13, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(genAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelImages, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(generateAnalyze, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(reportPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(consoleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -318,16 +386,18 @@ public class app extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_openMenuItemActionPerformed
 
-    private void genAFDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genAFDActionPerformed
+    private void generateAnalyzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateAnalyzeActionPerformed
         // TODO add your handling code here:
         // Import from parser and lexer
         Lexer lexer = new Lexer(new StringReader(codeArea.getText()));
         Parser parser = new Parser(lexer);
+  
         try {
             parser.parse();
         } catch (Exception ex) {
-            Logger.getLogger(app.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(application.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         // errors
         ArrayList<LexicalError> errors = new ArrayList<>();
         ArrayList<LexicalError> errorsLexer = lexer.errors;
@@ -336,8 +406,9 @@ public class app extends javax.swing.JFrame {
         try {
             generateHTMLErros(errors);
         } catch (IOException ex) {
-            Logger.getLogger(app.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(application.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         // GENERATE THE GLOBAL ALPHABET
         Map<String, List<String>> globalAlphabet = new HashMap<>();
         for(String alphabet : parser.alphabet_1){ // First alphabet with the format a ~ z
@@ -463,21 +534,59 @@ public class app extends javax.swing.JFrame {
             model.addElement(str);
         }
         listTree.setModel(model);
+        listFollow.setModel(model);
+        listTrans.setModel(model);
+        listAutoma.setModel(model);
+    }//GEN-LAST:event_generateAnalyzeActionPerformed
 
-    }//GEN-LAST:event_genAFDActionPerformed
+    private void showFollowImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showFollowImageActionPerformed
+        // TODO add your handling code here:
+        // get the name from the list
+         String name = listFollow.getSelectedValue();
+        // show the image in the label
+        ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\SIGUIENTES_202109567\\" + name + ".png");
+        Image img = image.getImage();
+        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_SMOOTH);
+        ImageIcon newIcon = new ImageIcon(newimg);
+        followImage.setIcon(newIcon);
+        
+    }//GEN-LAST:event_showFollowImageActionPerformed
+
+    private void showTransImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showTransImageActionPerformed
+        // TODO add your handling code here:
+        // get the name from the list
+         String name = listTrans.getSelectedValue();
+        // show the image in the label
+        ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\TRANSICIONES_202109567\\" + name + ".png");
+        Image img = image.getImage();
+        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_SMOOTH);
+        ImageIcon newIcon = new ImageIcon(newimg);
+        TransImage.setIcon(newIcon);
+    }//GEN-LAST:event_showTransImageActionPerformed
+
+    private void showAutoImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAutoImageActionPerformed
+        // TODO add your handling code here:
+         // get the name from the list
+         String name = listAutoma.getSelectedValue();
+        // show the image in the label
+        ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\AFD_202109567\\" + name + ".png");
+        Image img = image.getImage();
+        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_SMOOTH);
+        ImageIcon newIcon = new ImageIcon(newimg);
+        AutomaImage.setIcon(newIcon);
+        
+    }//GEN-LAST:event_showAutoImageActionPerformed
 
     private void showTreeImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showTreeImageActionPerformed
         // TODO add your handling code here:
-        String optionSelected = listTree.getSelectedValue();
-        
-        String path = "/src/main/reports/ARBOLES_201209567/" + optionSelected + ".png";
-        System.out.println(optionSelected);
-        System.out.println(path);
-        Icon imageTreeIcon = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage()
-                .getScaledInstance(treeImage.getWidth(), treeImage.getHeight(), 0));
-        
-        // Set image
-        treeImage.setIcon(imageTreeIcon);
+                 // get the name from the list
+         String name = listTree.getSelectedValue();
+        // show the image in the label
+        ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\ARBOLES_202109567\\" + name + ".png");
+        Image img = image.getImage();
+        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_SMOOTH);
+        ImageIcon newIcon = new ImageIcon(newimg);
+        treeImage.setIcon(newIcon);
     }//GEN-LAST:event_showTreeImageActionPerformed
 
     /**
@@ -497,46 +606,57 @@ public class app extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(app.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(app.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(app.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(app.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new app().setVisible(true);
+                new application().setVisible(true);
             }
         });
     }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel AFDPanel;
-    private javax.swing.JPanel FollowTablePanel;
-    private javax.swing.JPanel TransitionsTablePanel;
+    private javax.swing.JLabel AutomaImage;
+    private javax.swing.JPanel AutomatasPanel;
+    private javax.swing.JPanel FollowPanel;
+    private javax.swing.JLabel TransImage;
+    private javax.swing.JPanel TransitionPanel;
     private javax.swing.JPanel TreesPanel;
     private javax.swing.JTextArea codeArea;
     private javax.swing.JTextArea consoleArea;
-    private javax.swing.JLabel consoleLabel;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JButton genAFD;
+    private javax.swing.JLabel followImage;
+    private java.awt.Button generateAnalyze;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JList<String> listAutoma;
+    private javax.swing.JList<String> listFollow;
+    private javax.swing.JList<String> listTrans;
     private javax.swing.JList<String> listTree;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nameFile;
     private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JTabbedPane panelImages;
+    private javax.swing.JTabbedPane reportPanel;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
-    private javax.swing.JButton showTreeImage;
+    private java.awt.Button showAutoImage;
+    private java.awt.Button showFollowImage;
+    private java.awt.Button showTransImage;
+    private java.awt.Button showTreeImage;
     private javax.swing.JLabel treeImage;
     // End of variables declaration//GEN-END:variables
     
