@@ -1,0 +1,17 @@
+[ 
+{ 
+"Valor": "compiladores1.lab@hotMAIL.es", 
+"Expresion Regular": "correoElectronico",
+"Resultado": "Cadena No Válida"
+},
+{ 
+"Valor": "micorreo_123@gMAIL.com", 
+"Expresion Regular": "correoElectronico",
+"Resultado": "Cadena Válida"
+},
+{ 
+"Valor": "lachalana666@ingusac.com", 
+"Expresion Regular": "correoElectronico",
+"Resultado": "Cadena Válida"
+}
+]

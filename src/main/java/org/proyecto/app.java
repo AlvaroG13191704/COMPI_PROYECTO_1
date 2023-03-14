@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/Application.java to edit this template
  */
 package org.proyecto;
-
 import org.proyecto.Errors.LexicalError;
 import org.proyecto.codeAFD.AFDCode;
 import org.proyecto.codeAFD.objectJSON;
@@ -17,7 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Beto
@@ -40,14 +40,13 @@ public class app extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        nameFile = new javax.swing.JLabel();
         genAFD = new javax.swing.JButton();
-        genJSON = new javax.swing.JButton();
-        consola = new javax.swing.JLabel();
-        nameFile1 = new javax.swing.JLabel();
+        consoleLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        codeArea = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
+        codeArea = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
         consoleArea = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -56,50 +55,32 @@ public class app extends javax.swing.JFrame {
         saveAsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
-        setTitle("ExRegan USAC");
-        jLabel1.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 36)); // NOI18N
-        jLabel1.setText("ExRegan USAC");
 
-        genAFD.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 10)); // NOI18N
-        genAFD.setText("Generar Autómata");
+        nameFile.setText("Archivo: ");
+
+        genAFD.setText("Generar Autómata y Analizar Entrada");
         genAFD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    genAFDActionPerformed(evt);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                genAFDActionPerformed(evt);
             }
         });
 
-        genJSON.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 10)); // NOI18N
-        genJSON.setText("Analizar Entrada");
-        genJSON.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genJSONActionPerformed(evt);
-            }
-        });
-
-        consola.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 18)); // NOI18N
-        consola.setText("Consola");
-
-        nameFile1.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 14)); // NOI18N
-        nameFile1.setText("Archivo : ");
+        consoleLabel.setText("Consola:");
 
         codeArea.setColumns(20);
         codeArea.setRows(5);
-        jScrollPane2.setViewportView(codeArea);
+        jScrollPane1.setViewportView(codeArea);
+
+        jScrollPane2.setViewportView(jScrollPane1);
 
         consoleArea.setColumns(20);
-        consoleArea.setFont(new java.awt.Font("JetBrains Mono NL SemiBold", 0, 14)); // NOI18N
         consoleArea.setRows(5);
         consoleArea.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         consoleArea.disable();
-        jScrollPane1.setViewportView(consoleArea);
+        jScrollPane3.setViewportView(consoleArea);
 
         fileMenu.setMnemonic('f');
-        fileMenu.setText("Archivo");
+        fileMenu.setText("File");
 
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Abrir");
@@ -129,37 +110,30 @@ public class app extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(genAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
-                                    .addComponent(genJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(consola, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(nameFile1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(consoleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(genAFD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
+                        .addGap(0, 643, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nameFile1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(genAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(consoleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(genAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(genJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(consola, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,7 +165,7 @@ public class app extends javax.swing.JFrame {
             br.close();
             in.close();
             codeArea.setText(text.toString());
-            nameFile1.setText("Archivo: " + fileName.getName());
+            nameFile.setText("Archivo: " + fileName.getName());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error al abrir el archivo", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -236,21 +210,28 @@ public class app extends javax.swing.JFrame {
                 }
             }
         });
-        
     }//GEN-LAST:event_openMenuItemActionPerformed
 
-    private void genAFDActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_genAFDActionPerformed
+    private void genAFDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genAFDActionPerformed
         // TODO add your handling code here:
         // Import from parser and lexer
         Lexer lexer = new Lexer(new StringReader(codeArea.getText()));
         Parser parser = new Parser(lexer);
-        parser.parse();
+        try {
+            parser.parse();
+        } catch (Exception ex) {
+            Logger.getLogger(app.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // errors
         ArrayList<LexicalError> errors = new ArrayList<>();
         ArrayList<LexicalError> errorsLexer = lexer.errors;
         errors.addAll(errorsLexer);
         errors.addAll(parser.getErrors());
-        generateHTMLErros(errors);
+        try {
+            generateHTMLErros(errors);
+        } catch (IOException ex) {
+            Logger.getLogger(app.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // GENERATE THE GLOBAL ALPHABET
         Map<String, List<String>> globalAlphabet = new HashMap<>();
         for(String alphabet : parser.alphabet_1){ // First alphabet with the format a ~ z
@@ -283,6 +264,7 @@ public class app extends javax.swing.JFrame {
         for (int i = 0; i < regularExpressionArrayNew.length; i++) {
             // Array of results
             ArrayList<objectJSON> resultsJSON = new ArrayList<>();
+            String printConsole = "";
             // get the name of the regular expresion
             String regularExpresionName = parser.identifiersName.get(i);
             // remove the first and last character
@@ -334,6 +316,7 @@ public class app extends javax.swing.JFrame {
             tran.impGraph(regularExpresionName);
             System.out.println("============================= EVALUATE AFD ===============================================");
             // CREATE THE AFD
+            // Variables declaration - do not modify                     
             AFDCode afd = new AFDCode(tran.statesAFD, alphabet, tran.transitionsAFD, tran.initialStateAFD, tran.finalStatesAFD);
             // EVALUATE THE SENTENCE inside the map with values in an array
             for (String sentence : parser.StringsToEvaluate.keySet()) {
@@ -348,14 +331,19 @@ public class app extends javax.swing.JFrame {
                         // create a json object
                         if( result ) {
                             objectJSON obj = new objectJSON(val,regularExpresionName, "Cadena Válida");
+                            
+                            printConsole += "La expresión: " + val + "Es válida con la expresión Regular -> " + regularExpresionName + "\n";
                             resultsJSON.add(obj);
                         }else {
                             objectJSON obj = new objectJSON(val,regularExpresionName, "Cadena No Válida");
+                            printConsole += "La expresión: " + val + "No es válida con la expresión Regular -> " + regularExpresionName + "\n";
                             resultsJSON.add(obj);
                         }
                     }
                     // GENERATE THE JSON FILE
                     generateJSON(resultsJSON, regularExpresionName);
+                    // SHOW IN THE TEXTAREA (CONSOLE)
+                    consoleArea.setText(printConsole);
                 }
             }
         }
@@ -363,10 +351,6 @@ public class app extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Proceso Terminado");
 
     }//GEN-LAST:event_genAFDActionPerformed
-
-    private void genJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genJSONActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_genJSONActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,25 +386,24 @@ public class app extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea codeArea;
-    private javax.swing.JLabel consola;
     private javax.swing.JTextArea consoleArea;
+    private javax.swing.JLabel consoleLabel;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton genAFD;
-    private javax.swing.JButton genJSON;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JLabel nameFile1;
+    private javax.swing.JLabel nameFile;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
-
-
+    
     public static void generateJSON(ArrayList<objectJSON> results, String name) {
         String json = "[ \n";
         for (objectJSON obj : results) {

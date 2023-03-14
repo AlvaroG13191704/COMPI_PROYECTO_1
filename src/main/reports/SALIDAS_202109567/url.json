@@ -1,0 +1,17 @@
+[ 
+{ 
+"Valor": "https://compiladores-1.com", 
+"Expresion Regular": "url",
+"Resultado": "Cadena No Válida"
+},
+{ 
+"Valor": "http://google.es", 
+"Expresion Regular": "url",
+"Resultado": "Cadena Válida"
+},
+{ 
+"Valor": "https://facebook.com", 
+"Expresion Regular": "url",
+"Resultado": "Cadena Válida"
+}
+]
