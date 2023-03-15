@@ -235,7 +235,7 @@ NUMBER = [0-9]
           yybegin(SETS);
           return new Symbol(ParserSym.NUMBER,yyline, yycolumn, yytext());
       }
-    /* Handle _ */
+    /* Handle _  */
     "_" {
           yybegin(SETS);
           return new Symbol(ParserSym.UNDERSCORE,yyline, yycolumn, yytext());

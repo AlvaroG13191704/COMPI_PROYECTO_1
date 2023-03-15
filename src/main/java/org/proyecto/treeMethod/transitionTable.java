@@ -161,10 +161,9 @@ public class transitionTable {
                     String value = item.toString().replace("[", "").replace("]", "");
                     String[] values = value.split(",");
 
-                    map.put(values[0].replace("\"",""), values[1].replace(" ",""));
+                    map.put(values[0].replace("\"","").replace("\\",""), values[1].replace(" ",""));
 
                     if(values[0].equals(leaves.get(finalI).lexeme)){
-
 
                         //System.out.println("state : " + state.get(0) + " lexeme : " + values[0] + " value : " + values[1]);
                         tdValues[finalI] = "<TD border=\"1\">" + values[1] + "</TD>";

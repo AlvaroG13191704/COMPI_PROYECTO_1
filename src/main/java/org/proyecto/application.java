@@ -54,25 +54,30 @@ public class application extends javax.swing.JFrame {
         consoleArea = new javax.swing.JTextArea();
         reportPanel = new javax.swing.JTabbedPane();
         TreesPanel = new javax.swing.JPanel();
-        treeImage = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         listTree = new javax.swing.JList<>();
         showTreeImage = new java.awt.Button();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        treeImage = new javax.swing.JLabel();
         FollowPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         listFollow = new javax.swing.JList<>();
         showFollowImage = new java.awt.Button();
+        treeImage1 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
         followImage = new javax.swing.JLabel();
         TransitionPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         listTrans = new javax.swing.JList<>();
         showTransImage = new java.awt.Button();
+        jScrollPane9 = new javax.swing.JScrollPane();
         TransImage = new javax.swing.JLabel();
         AutomatasPanel = new javax.swing.JPanel();
-        AutomaImage = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         listAutoma = new javax.swing.JList<>();
         showAutoImage = new java.awt.Button();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        AutomaImage = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -111,6 +116,8 @@ public class application extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane3.setViewportView(treeImage);
+
         javax.swing.GroupLayout TreesPanelLayout = new javax.swing.GroupLayout(TreesPanel);
         TreesPanel.setLayout(TreesPanelLayout);
         TreesPanelLayout.setHorizontalGroup(
@@ -119,9 +126,9 @@ public class application extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(TreesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(showTreeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(treeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         TreesPanelLayout.setVerticalGroup(
@@ -131,7 +138,7 @@ public class application extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(showTreeImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
             .addGroup(TreesPanelLayout.createSequentialGroup()
-                .addComponent(treeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
 
@@ -146,6 +153,8 @@ public class application extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane8.setViewportView(followImage);
+
         javax.swing.GroupLayout FollowPanelLayout = new javax.swing.GroupLayout(FollowPanel);
         FollowPanel.setLayout(FollowPanelLayout);
         FollowPanelLayout.setHorizontalGroup(
@@ -154,10 +163,15 @@ public class application extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(FollowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(showFollowImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followImage, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(FollowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(FollowPanelLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(treeImage1)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         FollowPanelLayout.setVerticalGroup(
             FollowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,8 +180,13 @@ public class application extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(showFollowImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
             .addGroup(FollowPanelLayout.createSequentialGroup()
-                .addComponent(followImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane8)
                 .addContainerGap())
+            .addGroup(FollowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(FollowPanelLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(treeImage1)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         reportPanel.addTab("SIGUIENTES", FollowPanel);
@@ -181,6 +200,8 @@ public class application extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane9.setViewportView(TransImage);
+
         javax.swing.GroupLayout TransitionPanelLayout = new javax.swing.GroupLayout(TransitionPanel);
         TransitionPanel.setLayout(TransitionPanelLayout);
         TransitionPanelLayout.setHorizontalGroup(
@@ -189,9 +210,9 @@ public class application extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(TransitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(showTransImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TransImage, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         TransitionPanelLayout.setVerticalGroup(
@@ -201,7 +222,7 @@ public class application extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(showTransImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
             .addGroup(TransitionPanelLayout.createSequentialGroup()
-                .addComponent(TransImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane9)
                 .addContainerGap())
         );
 
@@ -216,6 +237,8 @@ public class application extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane10.setViewportView(AutomaImage);
+
         javax.swing.GroupLayout AutomatasPanelLayout = new javax.swing.GroupLayout(AutomatasPanel);
         AutomatasPanel.setLayout(AutomatasPanelLayout);
         AutomatasPanelLayout.setHorizontalGroup(
@@ -226,7 +249,7 @@ public class application extends javax.swing.JFrame {
                     .addComponent(showAutoImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(AutomaImage, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         AutomatasPanelLayout.setVerticalGroup(
@@ -236,7 +259,8 @@ public class application extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(showAutoImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
             .addGroup(AutomatasPanelLayout.createSequentialGroup()
-                .addComponent(AutomaImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jScrollPane10)
                 .addContainerGap())
         );
 
@@ -439,7 +463,7 @@ public class application extends javax.swing.JFrame {
         // remove the first element
         String[] regularExpressionArrayNew = Arrays.copyOfRange(regularExpressionArray, 1, regularExpressionArray.length);
         // iterate over the array
-        String printConsole = "";
+        StringBuilder printConsole = new StringBuilder();
         for (int i = 0; i < regularExpressionArrayNew.length; i++) {
             // Array of results
             ArrayList<objectJSON> resultsJSON = new ArrayList<>();
@@ -505,17 +529,19 @@ public class application extends javax.swing.JFrame {
                     // iterate over the array
                     for(String val: values) {
                         // evaluate the sentence
-                        boolean result = afd.accept(val);
-                        System.out.println("Result: " + result);
+                        String newVal = val.replace("\\", "");
+                        System.out.println("Value: " + newVal);
+                        boolean result = afd.accept(newVal);
+                        System.out.println("Result: " + newVal);
                         // create a json object
                         if( result ) {
-                            objectJSON obj = new objectJSON(val,regularExpresionName, "Cadena Válida");
+                            objectJSON obj = new objectJSON(newVal,regularExpresionName, "Cadena Válida");
                             
-                            printConsole += "La expresión: " + val + " Es válida con la expresión Regular -> " + regularExpresionName + "\n";
+                            printConsole.append("La expresión: ").append(newVal).append(" Es válida con la expresión Regular -> ").append(regularExpresionName).append("\n");
                             resultsJSON.add(obj);
                         }else {
                             objectJSON obj = new objectJSON(val,regularExpresionName, "Cadena No Válida");
-                            printConsole += "La expresión: " + val + " No es válida con la expresión Regular -> " + regularExpresionName + "\n";
+                            printConsole.append("La expresión: ").append(newVal).append(" No es válida con la expresión Regular -> ").append(regularExpresionName).append("\n");
                             resultsJSON.add(obj);
                         }
                     }
@@ -527,7 +553,7 @@ public class application extends javax.swing.JFrame {
         // SHOW MESSAGE OF GOD
         JOptionPane.showMessageDialog(null, "Proceso Terminado");
         // SHOW IN THE TEXTAREA (CONSOLE)
-        consoleArea.setText(printConsole);
+        consoleArea.setText(printConsole.toString());
         // ADD TO THE LIST SWIG THE NAME OF THE regular expresions
         DefaultListModel<String> model = new DefaultListModel<>();
         for(String str: parser.identifiersName){
@@ -546,7 +572,7 @@ public class application extends javax.swing.JFrame {
         // show the image in the label
         ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\SIGUIENTES_202109567\\" + name + ".png");
         Image img = image.getImage();
-        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_DEFAULT);
         ImageIcon newIcon = new ImageIcon(newimg);
         followImage.setIcon(newIcon);
         
@@ -559,7 +585,7 @@ public class application extends javax.swing.JFrame {
         // show the image in the label
         ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\TRANSICIONES_202109567\\" + name + ".png");
         Image img = image.getImage();
-        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_DEFAULT);
         ImageIcon newIcon = new ImageIcon(newimg);
         TransImage.setIcon(newIcon);
     }//GEN-LAST:event_showTransImageActionPerformed
@@ -571,7 +597,7 @@ public class application extends javax.swing.JFrame {
         // show the image in the label
         ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\AFD_202109567\\" + name + ".png");
         Image img = image.getImage();
-        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_DEFAULT);
         ImageIcon newIcon = new ImageIcon(newimg);
         AutomaImage.setIcon(newIcon);
         
@@ -584,7 +610,7 @@ public class application extends javax.swing.JFrame {
         // show the image in the label
         ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\ARBOLES_202109567\\" + name + ".png");
         Image img = image.getImage();
-        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_DEFAULT);
         ImageIcon newIcon = new ImageIcon(newimg);
         treeImage.setIcon(newIcon);
     }//GEN-LAST:event_showTreeImageActionPerformed
@@ -638,11 +664,15 @@ public class application extends javax.swing.JFrame {
     private java.awt.Button generateAnalyze;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JList<String> listAutoma;
     private javax.swing.JList<String> listFollow;
     private javax.swing.JList<String> listTrans;
@@ -658,6 +688,7 @@ public class application extends javax.swing.JFrame {
     private java.awt.Button showTransImage;
     private java.awt.Button showTreeImage;
     private javax.swing.JLabel treeImage;
+    private javax.swing.JLabel treeImage1;
     // End of variables declaration//GEN-END:variables
     
     public static void generateJSON(ArrayList<objectJSON> results, String name) {
