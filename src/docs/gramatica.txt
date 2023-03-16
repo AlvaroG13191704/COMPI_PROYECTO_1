@@ -1,0 +1,36 @@
+Terminales = {  LBRACE, RBRACE, CONJ, ID, ARROW1, ARROW2, SEMICOLON, COLON, TILDE,
+                SPECIAL, LETTER, NUMBER, PLUS, STAR, QUESTION, OR, DOT, COMMA, STRING,PERCENT
+                SIMB1, SIMB2, SIMB3,UNDERSCORE }
+
+No Terminales = { ini,body, option, option_2, re}
+
+ini ::= LBRACE body RBRACE
+
+body ::= CONJ COLON ID ARROW1 ARROW2 option TILDE option SEMICOLON body
+        | CONJ COLON ID ARROW1 ARROW2 option_2 SEMICOLON body
+        | ID ARROW1 ARROW2 re SEMICOLON body
+        | PERCENT  body
+        | ID COLON STRING:var SEMICOLON body
+        | epsilon
+
+re ::=
+      |SIMB1 re
+      |SIMB2 re
+      |SIMB3 re
+      |PLUS  re
+      |STAR  re
+      |QUESTION re
+      |OR re
+      |DOT re
+      |LBRACE ID RBRACE re
+      |STRING re
+
+option ::= LETTER
+          |NUMBER
+          |SPECIAL
+
+option_2 ::= LETTER  COMMA option_2
+            |NUMBER  COMMA option_2
+            |SPECIAL COMMA option_2
+            |UNDERSCORE COMMA option_2
+            |option

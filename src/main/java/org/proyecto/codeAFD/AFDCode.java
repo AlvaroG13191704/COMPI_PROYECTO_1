@@ -50,7 +50,6 @@ public class AFDCode {
                     // if the transition contains the current character, change the current state
                     if(transition.containsKey(String.valueOf(c))){
                         currentState = transition.get(String.valueOf(c));
-                        System.out.println("Current state: " + currentState + " with character: " + c + " has a one element transition");
                         break;
                     }else {
                         // Evaluate if that character is on the alphabet
@@ -58,20 +57,17 @@ public class AFDCode {
                             // find the key that contains the current character type to change the current state
                             if( setName != null && transition.containsKey(setName)) {
                                 currentState = transition.get(setName);
-                                System.out.println("Current state: " + currentState + " with character: " + c + " is on the alphabet: "  + setName);
                                 break;
                             }else {
 
                             }
                         }
-                        System.out.println("Current state: " + currentState + " with character: " + c + " has a one element transition but doesn't match");
                         return false;
                     }
                 } else if (transition.size() > 1 ){
                     // if the key array contains the current character, change the current state
                     if(transition.containsKey(String.valueOf(c))){
                         currentState = transition.get(String.valueOf(c));
-                        System.out.println("Current state: " + currentState + " with character: " + c + " has a more than one element transition but match with the key");
                         break;
                     } else {
                         // if the key array doesn't contains the current character, check if the key array contains the current character type
@@ -79,11 +75,9 @@ public class AFDCode {
                             // find the key that contains the current character type to change the current state
                             if( setName != null && transition.containsKey(setName)) {
                                 currentState = transition.get(setName);
-                                System.out.println("Current state: " + currentState + " with character: " + c + " is on the alphabet: "  + setName);
                                 break;
                             }
                         }else {
-                            System.out.println("Current state: " + currentState + " with character: " + c + " is not on the alphabet");
                             return false;
                         }
                     }
