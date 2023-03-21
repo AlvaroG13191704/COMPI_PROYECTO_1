@@ -2,6 +2,7 @@ package org.proyecto;
 import org.proyecto.Errors.LexicalError;
 import org.proyecto.codeAFD.AFDCode;
 import org.proyecto.codeAFD.objectJSON;
+import org.proyecto.codeAFND.AFNDCode;
 import org.proyecto.treeMethod.*;
 import java.io.*;
 import java.util.*;
@@ -107,6 +108,9 @@ public class Main {
             Tree tree = new Tree(expresionString,leaves, table );
             node raiz = tree.getRoot();
             raiz.getNode(); // DETERMINA SI LOS NODOS SON ANULABLES, SUS PRIMEROS Y ULTIMOS
+            System.out.println("==============================AFND==============================");
+            AFNDCode afnd = new AFNDCode();
+            afnd.graphAFND(raiz,regularExpresionName);
             raiz.follow();
             System.out.println("==============================VALORES NODO ULTIMO . Y TABLA HOJAS ==============================");
             // Create a function to generate the graphviz code of the tree

@@ -6,13 +6,14 @@ import java.util.Stack;
 
 import org.proyecto.treeMethod.type.Types;
 public class node {
+
     public ArrayList<Integer> first;
     public ArrayList<Integer> last;
 
     boolean anullable;
 
     public String lexeme;
-    Types type;
+    public Types type;
     int number;
 
     public boolean accept;
@@ -22,6 +23,8 @@ public class node {
 
     ArrayList<node> leaves;
     ArrayList<ArrayList> table;
+
+    public static int id = 0;
 
 
 
@@ -103,6 +106,14 @@ public class node {
             }
         }
         return this;
+    }
+
+    public Object getLeft() {
+        return left;
+    }
+
+    public Object getRight() {
+        return right;
     }
 
     public Object follow(){

@@ -1,0 +1,48 @@
+digraph AFND {
+fontname="Helvetica,Arial,sans-serif";
+node [fontname="Helvetica,Arial,sans-serif"]
+edge [fontname="Helvetica,Arial,sans-serif"]
+rankdir=LR;
+S0 -> S1
+[label = "#" ];
+S1 -> S2
+[label = "e"];
+S2 -> S3
+[label = minuscula ];
+S3 -> S2
+[label = "e"];
+S3 -> S4
+[label = "e"];
+S4 -> S5
+[label = "." ];
+S5 -> S6
+[label = "e"];
+S6 -> S7
+[label = minuscula ];
+S7 -> S6
+[label = "e"];
+S7 -> S8
+[label = "e"];
+S8 -> S9
+[label = "/" ];
+S9 -> S10
+[label = "/" ];
+S10 -> S11
+[label = ":" ];
+S11 -> S12
+[label = "e"];
+S12 -> S13
+[label = "s" ];
+S13 -> S14
+[label = "e"];
+S11 -> S14
+[label = "e"];
+S14 -> S15
+[label = "p" ];
+S15 -> S16
+[label = "t" ];
+S16 -> S17
+[label = "t" ];
+S17 -> S18
+[label = "h" ];
+}

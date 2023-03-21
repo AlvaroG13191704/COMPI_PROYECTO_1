@@ -11,13 +11,12 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
 import org.proyecto.Errors.LexicalError;
 import org.proyecto.codeAFD.AFDCode;
 import org.proyecto.codeAFD.objectJSON;
+import org.proyecto.codeAFND.AFNDCode;
 import org.proyecto.treeMethod.Tree;
 import org.proyecto.treeMethod.followTable;
 import org.proyecto.treeMethod.node;
@@ -78,6 +77,12 @@ public class application extends javax.swing.JFrame {
         showAutoImage = new java.awt.Button();
         jScrollPane10 = new javax.swing.JScrollPane();
         AutomaImage = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        AFNDImage = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        listAFND = new javax.swing.JList<>();
+        showAFNDImage = new java.awt.Button();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -266,6 +271,44 @@ public class application extends javax.swing.JFrame {
 
         reportPanel.addTab("AUTÓMATAS", AutomatasPanel);
 
+        jScrollPane11.setViewportView(AFNDImage);
+
+        jScrollPane12.setViewportView(listAFND);
+
+        showAFNDImage.setLabel("Mostrar Imagen");
+        showAFNDImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showAFNDImageActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(showAFNDImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(showAFNDImage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane11)
+                .addContainerGap())
+        );
+
+        reportPanel.addTab("AFND", jPanel1);
+
         fileMenu.setMnemonic('f');
         fileMenu.setText("ARCHIVO");
 
@@ -325,10 +368,10 @@ public class application extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(reportPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -492,6 +535,9 @@ public class application extends javax.swing.JFrame {
             node raiz = tree.getRoot();
             raiz.getNode(); // DETERMINA SI LOS NODOS SON ANULABLES, SUS PRIMEROS Y ULTIMOS
             raiz.follow();
+            System.out.println("==============================AFND==============================");
+            AFNDCode afnd = new AFNDCode();
+            afnd.graphAFND(raiz,regularExpresionName);
             System.out.println("==============================VALORES NODO ULTIMO . Y TABLA HOJAS ==============================");
             // Create a function to generate the graphviz code of the tree
             raiz.generateGraphviz(regularExpresionName);
@@ -563,43 +609,41 @@ public class application extends javax.swing.JFrame {
         listFollow.setModel(model);
         listTrans.setModel(model);
         listAutoma.setModel(model);
+        listAFND.setModel(model);
     }//GEN-LAST:event_generateAnalyzeActionPerformed
 
     private void showFollowImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showFollowImageActionPerformed
         // TODO add your handling code here:
         // get the name from the list
+        followImage.setHorizontalAlignment(JLabel.CENTER);
+        followImage.setVerticalAlignment(JLabel.CENTER);
          String name = listFollow.getSelectedValue();
         // show the image in the label
         ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\SIGUIENTES_202109567\\" + name + ".png");
-        Image img = image.getImage();
-        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_DEFAULT);
-        ImageIcon newIcon = new ImageIcon(newimg);
-        followImage.setIcon(newIcon);
+        followImage.setIcon(image);
         
     }//GEN-LAST:event_showFollowImageActionPerformed
 
     private void showTransImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showTransImageActionPerformed
         // TODO add your handling code here:
         // get the name from the list
+        TransImage.setHorizontalAlignment(JLabel.CENTER);
+        TransImage.setVerticalAlignment(JLabel.CENTER);
          String name = listTrans.getSelectedValue();
         // show the image in the label
         ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\TRANSICIONES_202109567\\" + name + ".png");
-        Image img = image.getImage();
-        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_DEFAULT);
-        ImageIcon newIcon = new ImageIcon(newimg);
-        TransImage.setIcon(newIcon);
+        TransImage.setIcon(image);
     }//GEN-LAST:event_showTransImageActionPerformed
 
     private void showAutoImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAutoImageActionPerformed
         // TODO add your handling code here:
          // get the name from the list
+        AutomaImage.setHorizontalAlignment(JLabel.CENTER);
+        AutomaImage.setVerticalAlignment(JLabel.CENTER);
          String name = listAutoma.getSelectedValue();
         // show the image in the label
         ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\AFD_202109567\\" + name + ".png");
-        Image img = image.getImage();
-        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_DEFAULT);
-        ImageIcon newIcon = new ImageIcon(newimg);
-        AutomaImage.setIcon(newIcon);
+        AutomaImage.setIcon(image);
         
     }//GEN-LAST:event_showAutoImageActionPerformed
 
@@ -607,13 +651,23 @@ public class application extends javax.swing.JFrame {
         // TODO add your handling code here:
                  // get the name from the list
          String name = listTree.getSelectedValue();
+        treeImage.setHorizontalAlignment(JLabel.CENTER);
+        treeImage.setVerticalAlignment(JLabel.CENTER);
         // show the image in the label
         ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\ARBOLES_202109567\\" + name + ".png");
-        Image img = image.getImage();
-        Image newimg =img.getScaledInstance(600, 595,  java.awt.Image.SCALE_DEFAULT);
-        ImageIcon newIcon = new ImageIcon(newimg);
-        treeImage.setIcon(newIcon);
+        treeImage.setIcon(image);
     }//GEN-LAST:event_showTreeImageActionPerformed
+
+    private void showAFNDImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAFNDImageActionPerformed
+         // TODO add your handling code here:
+        // get the name from the list
+         String name = listAFND.getSelectedValue();
+        AFNDImage.setHorizontalAlignment(JLabel.CENTER);
+        AFNDImage.setVerticalAlignment(JLabel.CENTER);
+        // show the image in the label
+        ImageIcon image = new ImageIcon("E:\\2023\\QUINTO-SEMESTRE\\COMPILADORES-1\\LABORATORIO\\PROYECTO_1\\PROYECTO_1\\src\\main\\reports\\AFND_202109567\\" + name + ".png");
+        AFNDImage.setIcon(image);
+    }//GEN-LAST:event_showAFNDImageActionPerformed
 
     /**
      * @param args the command line arguments
@@ -651,6 +705,7 @@ public class application extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AFNDImage;
     private javax.swing.JLabel AutomaImage;
     private javax.swing.JPanel AutomatasPanel;
     private javax.swing.JPanel FollowPanel;
@@ -663,8 +718,11 @@ public class application extends javax.swing.JFrame {
     private javax.swing.JLabel followImage;
     private java.awt.Button generateAnalyze;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -673,6 +731,7 @@ public class application extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JList<String> listAFND;
     private javax.swing.JList<String> listAutoma;
     private javax.swing.JList<String> listFollow;
     private javax.swing.JList<String> listTrans;
@@ -683,6 +742,7 @@ public class application extends javax.swing.JFrame {
     private javax.swing.JTabbedPane reportPanel;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private java.awt.Button showAFNDImage;
     private java.awt.Button showAutoImage;
     private java.awt.Button showFollowImage;
     private java.awt.Button showTransImage;
