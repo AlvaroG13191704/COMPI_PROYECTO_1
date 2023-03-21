@@ -1,7 +1,7 @@
 [ 
 { 
-"Valor": "\'cadena entre comilla simple\'", 
+"Valor": "'cadena entre comilla simple'", 
 "Expresion Regular": "cadena",
-"Resultado": "Cadena No Válida"
+"Resultado": "Cadena Válida"
 }
 ]
