@@ -50,8 +50,8 @@ public class AFNDCode {
                 label += "[label = " + lexem + " ];\n";
             }
             case "AND" -> { // Listo
-                label += generateAFND((node) root.getRight());
                 label += generateAFND((node) root.getLeft());
+                label += generateAFND((node) root.getRight());
             }
             case "OR" -> {
                 int auxOr = id;
